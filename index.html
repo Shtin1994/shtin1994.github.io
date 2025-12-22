@@ -6,15 +6,13 @@
   <title>Путешествие в 2026 🎄</title>
   <meta name="theme-color" content="#0b1020" />
 
-  <!-- 1. Красивые шрифты (Montserrat) -->
+  <!-- Шрифты и иконки -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
-
-  <!-- 2. Фавиконка (иконка вкладки) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>">
 
-  <!-- 3. Meta-теги для красивых ссылок (если решишь отправить ссылку, а не QR) -->
+  <!-- Open Graph -->
   <meta property="og:title" content="Секретное послание 🎄" />
   <meta property="og:description" content="У меня есть кое-что важное для тебя..." />
   <meta property="og:type" content="website" />
@@ -29,24 +27,15 @@
       --border: rgba(255,255,255,.14);
       --shadow: 0 30px 80px rgba(0,0,0,.60);
       --radius: 22px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      /* Обновленный шрифт */
       --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, monospace;
       --gold: #f6c453;
-      --green:#22c55e;
-      --violet:#8b5cf6;
     }
 
     *{ box-sizing:border-box; }
     body{
-      margin:0;
-      min-height:100svh; /* svh лучше для мобильных */
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-      font-family:var(--sans);
-      color:var(--text);
+      margin:0; min-height:100svh; display:flex; align-items:center; justify-content:center;
+      padding:20px; font-family:var(--sans); color:var(--text);
       background:
         radial-gradient(1100px 520px at 12% 12%, rgba(139,92,246,.22), transparent 60%),
         radial-gradient(900px 520px at 88% 18%, rgba(34,197,94,.14), transparent 58%),
@@ -55,34 +44,30 @@
       overflow-x:hidden;
     }
 
-    /* ✨ Мерцание фона */
+    /* Анимации фона */
     .glow{
-      position: fixed; inset: -40px;
-      background:
-        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.45) 40%, transparent 60%),
-        radial-gradient(1.5px 1.5px at 85% 75%, rgba(255,255,255,.20) 40%, transparent 60%);
-      opacity: .55; filter: blur(.2px);
+      position: fixed; inset: -40px; opacity: .55; filter: blur(.2px); pointer-events:none; z-index:0;
+      background: radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.45) 40%, transparent 60%),
+                  radial-gradient(1.5px 1.5px at 85% 75%, rgba(255,255,255,.20) 40%, transparent 60%);
       animation: twinkle 6s ease-in-out infinite alternate;
-      pointer-events:none; z-index:0;
     }
     @keyframes twinkle{ from{opacity:.35; transform:translateY(0);} to{opacity:.60; transform:translateY(6px);} }
 
-    /* ❄️ Снег */
     .snow, .snow:before, .snow:after{
-      position: fixed; inset: 0; content:""; pointer-events:none;
+      position: fixed; inset: 0; content:""; pointer-events:none; z-index: 1; opacity: .40; filter: blur(.15px);
+      background-size: 600px 300px;
       background-image:
         radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.75) 45%, transparent 55%),
         radial-gradient(1.6px 1.6px at 140px 90px, rgba(255,255,255,.55) 45%, transparent 55%),
         radial-gradient(2px 2px at 640px 150px, rgba(255,255,255,.58) 45%, transparent 55%);
-      background-size: 600px 300px; opacity: .40; filter: blur(.15px); z-index: 1;
     }
     .snow{ animation: snowFall 18s linear infinite; }
     .snow:before{ opacity:.28; transform: translateY(-300px); animation: snowFall 26s linear infinite; }
     .snow:after{ opacity:.22; transform: translateY(-600px); animation: snowFall 34s linear infinite; }
     @keyframes snowFall{ from{ background-position: 0 0; } to{ background-position: 0 900px; } }
 
+    /* Карточка */
     .wrap{ width:min(740px, 100%); position:relative; z-index:2; }
-
     .card{
       background: var(--card); border:1px solid var(--border);
       box-shadow: var(--shadow); border-radius: var(--radius);
@@ -100,29 +85,21 @@
       text-transform:uppercase; color: rgba(243,244,246,.86);
       display:flex; align-items:center; gap:8px;
     }
-    .badge span{
-      padding:6px 12px; border-radius:999px;
-      border:1px solid rgba(246,196,83,.25); background: rgba(246,196,83,.10);
-    }
+    .badge span{ padding:6px 12px; border-radius:999px; border:1px solid rgba(246,196,83,.25); background: rgba(246,196,83,.10); }
 
     .content{ padding:24px 20px 22px; }
 
-    h1{
-      margin:0 0 10px; font-size:24px; font-weight:800;
-      letter-spacing:-0.02em; line-height: 1.3;
-    }
-
+    h1{ margin:0 0 10px; font-size:24px; font-weight:800; letter-spacing:-0.02em; line-height: 1.3; }
     p{ margin:10px 0; line-height:1.65; color: rgba(243,244,246,.93); font-size: 15px; }
     .muted{ color: var(--muted); font-size:13px; }
 
-    .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; }
+    .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; min-height: 48px; /* чтобы не прыгало при появлении */ }
 
     button{
       appearance:none; border:none; outline:none;
       padding:14px 24px; border-radius: 999px; cursor:pointer;
       font-weight:700; font-family: var(--sans); letter-spacing:.02em; font-size: 14px;
-      transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
-      position:relative; overflow:hidden;
+      transition: all .2s; position:relative; overflow:hidden;
     }
     button:active{ transform: scale(.97); }
     
@@ -133,10 +110,11 @@
     }
     .primary:hover{ box-shadow: 0 6px 24px rgba(34,197,94,.40); filter: brightness(1.05); }
 
-    /* Кнопки при скрытии */
-    .hidden-btn {
-        display: none;
-    }
+    .hidden-btn { display: none; }
+    
+    /* Кнопка 2 изначально скрыта CSS, пока не напечатается текст */
+    #readyBtn { display: none; opacity: 0; animation: btnFadeIn 0.5s forwards; }
+    @keyframes btnFadeIn { to { opacity: 1; } }
 
     .divider{ height:1px; background: var(--border); margin:20px 0; opacity: 0.6; }
 
@@ -149,58 +127,45 @@
       margin-bottom: 12px;
     }
 
+    /* Стили для текста, который печатается */
+    .typing-area {
+        white-space: pre-wrap; /* Сохраняет переносы строк \n */
+        min-height: 20px;
+    }
+    .typing-cursor::after {
+      content: '▋'; display: inline-block; vertical-align: bottom;
+      animation: blink 1s step-start infinite; color: var(--gold); margin-left: 2px;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
     .hint{
       display:none; margin-top:16px;
       border:1px solid rgba(246,196,83,.28); background: rgba(246,196,83,.08);
       border-radius: 16px; padding:16px;
-      position:relative; overflow:hidden;
     }
-
     .hint .label{
       font-family: var(--mono); font-size:11px; color: var(--gold);
       margin-bottom:6px; letter-spacing:.08em; text-transform: uppercase; font-weight: 700;
     }
-
-    /* Эффект печатания */
-    .hint .text{
-      font-size:16px; color: #fff; white-space: pre-wrap;
-      font-weight: 500; line-height: 1.6;
-    }
-    .typing-cursor::after {
-      content: '▋';
-      display: inline-block;
-      vertical-align: bottom;
-      animation: blink 1s step-start infinite;
-      color: var(--gold);
-      margin-left: 2px;
-    }
-    @keyframes blink { 50% { opacity: 0; } }
+    .hint .text{ font-size:16px; color: #fff; font-weight: 500; line-height: 1.6; }
 
     @keyframes fadeUp{ from{ opacity:0; transform: translateY(15px); } to{ opacity:1; transform: translateY(0); } }
+    
+    .corner{ position:absolute; right:16px; top:60px; font-size:24px; opacity:.8; }
 
-    /* Уголок */
-    .corner{
-      position:absolute; right:16px; top:60px; font-size:24px;
-      opacity:.8; filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
-    }
-
-    /* Анимация глитча для контейнера подсказки */
     .glitch-anim { animation: hintGlitch .5s ease-in-out 1; }
     @keyframes hintGlitch{
-      0%{ transform: translate(0); }
+      0%, 100%{ transform: translate(0); }
       20%{ transform: translate(-2px, 2px); }
       40%{ transform: translate(-2px, -2px); }
       60%{ transform: translate(2px, 2px); }
       80%{ transform: translate(2px, -2px); }
-      100%{ transform: translate(0); }
     }
-
   </style>
 </head>
 
 <body>
-  <!-- Аудио плеер (скрытый) -->
-  <!-- Убедись, что файл music.mp3 лежит в той же папке на GitHub! -->
+  <!-- Музыка -->
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
   </audio>
@@ -209,21 +174,20 @@
   <div class="snow"></div>
 
   <div class="wrap">
-    <div class="card" role="main">
+    <div class="card">
       <div class="topbar">
         <span class="dot" style="background:#ef4444"></span>
         <span class="dot" style="background:#f59e0b"></span>
         <span class="dot" style="background:#22c55e"></span>
-        <div class="badge"><span>🎄 Time Travel: 2026</span></div>
+        <div class="badge"><span>🎄БУДУЩИЙ 2026 ГОД! </span></div>
       </div>
 
       <div class="corner">✨</div>
 
       <div class="content">
-        <h1>Ты готова к путешествию в 2026 год?</h1>
+        <h1>МОЙ ИЗУМРУДИК, ты готова к путешествию в 2026 год?</h1>
         <p class="muted">
-          Если ты читаешь это — значит связь установлена.
-          Дальше будет только интереснее.
+          Если ты читаешь это - значит связь установлена и путешествие начинается.
         </p>
 
         <div class="ctaRow">
@@ -232,26 +196,22 @@
 
         <div class="divider" style="display:none" id="mainDivider"></div>
 
+        <!-- Контейнер письма -->
         <div class="letter" id="letter">
-          <div class="seal">28.12 • ЗАЩИЩЕННЫЙ КАНАЛ СВЯЗИ</div>
+          <div class="seal">28.12 • НАШ КАНАЛ СВЯЗИ</div>
 
-          <p id="letterText" style="font-weight: 500;">
-            Спасибо тебе за этот год. ✨<br>
-            За тепло, за поддержку, за смех и за моменты, которые останутся со мной навсегда. 🤍<br>
-            Мне правда очень повезло с тобой — и я хочу, чтобы дальше было только лучше. 🎄
-          </p>
-
-          <p class="muted">
-            Нажми на кнопку ниже, чтобы получить координаты.
-          </p>
+          <!-- Сюда будет печататься поздравление -->
+          <p id="letterText" class="typing-area" style="font-weight: 500; margin-bottom: 20px;"></p>
 
           <div class="ctaRow">
             <button class="primary" id="readyBtn">Получить данные ✅</button>
           </div>
 
+          <!-- Контейнер подсказки -->
           <div class="hint" id="hint">
-            <div class="label">Входящая передача...</div>
-            <div class="text" id="typewriterText"></div>
+            <div class="label">передаю сообщение...</div>
+            <!-- Сюда будет печататься подсказка -->
+            <div class="text typing-area" id="hintText"></div>
           </div>
         </div>
       </div>
@@ -259,41 +219,72 @@
   </div>
 
   <script>
+    // --- НАСТРОЙКИ ТЕКСТА (Можешь менять тут) ---
+    
+    // Текст 1: Поздравление
+    // \n означает перенос строки
+    const textCongratulation = "Спасибо тебе за этот год. ✨\nЗа тепло и уют, за поддержку, за смех и за моменты, которые останутся со мной навсегда. 🤍\n\nМне безумно повезло с тобой - и я хочу, чтобы дальше было только лучше. Абу-Даби, Домики в лесу, гулянки в парке - это только начало!🎄";
+
+    // Текст 2: Подсказка
+    const textHint = "«28 декабря. Зафиксирован перелом времени для нас с тобой.\nПервый ключ находится у входной двери.\n\nПодойди к двери и посмотри над глазком.»";
+
+    // ---------------------------------------------
+
     const openLetterBtn = document.getElementById('openLetterBtn');
     const readyBtn = document.getElementById('readyBtn');
     const letter = document.getElementById('letter');
     const hint = document.getElementById('hint');
-    const typewriterText = document.getElementById('typewriterText');
+    const letterTextField = document.getElementById('letterText');
+    const hintTextField = document.getElementById('hintText');
     const mainDivider = document.getElementById('mainDivider');
     const audio = document.getElementById('bgMusic');
 
-    // Текст подсказки
-    const message = "«28 декабря. Зафиксирован перелом времени.\nПервый ключ находится у входной двери.\n\nПодойди к двери и посмотри над глазком.»";
-
-    // Функция эффекта печатной машинки
-    function typeWriter(text, i = 0) {
-      if (i < text.length) {
-        typewriterText.innerHTML = text.substring(0, i+1) + '<span class="typing-cursor"></span>';
-        setTimeout(() => typeWriter(text, i + 1), 40); // Скорость печати (меньше - быстрее)
-      } else {
-        typewriterText.innerHTML = text; // Убираем курсор в конце
+    // Функция печатания текста
+    // element: куда печатать
+    // text: что печатать
+    // speed: скорость (мс)
+    // callback: функция, которая сработает после окончания
+    function typeWriter(element, text, speed, callback) {
+      let i = 0;
+      function type() {
+        if (i < text.length) {
+          // Добавляем символ + курсор
+          element.innerHTML = text.substring(0, i + 1) + '<span class="typing-cursor"></span>';
+          i++;
+          setTimeout(type, speed);
+        } else {
+          // Убираем курсор в конце
+          element.innerHTML = text;
+          if (callback) callback();
+        }
       }
+      type();
     }
 
+    // 1. Нажатие на "Открыть письмо"
     openLetterBtn.addEventListener('click', () => {
-      // 1. Включаем музыку (важно делать это по клику!)
-      audio.volume = 0.4; // Громкость 40%
-      audio.play().catch(e => console.log("Audio play failed:", e));
+      // Запуск музыки
+      audio.volume = 0.4;
+      audio.play().catch(e => console.log("Audio play error:", e));
 
-      // 2. Интерфейс
-      openLetterBtn.classList.add('hidden-btn'); // Скрываем кнопку
+      // Скрытие кнопки и показ разделителя
+      openLetterBtn.classList.add('hidden-btn');
       mainDivider.style.display = 'block';
       letter.style.display = 'block';
-      
-      // Плавный скролл
+
+      // Скролл
       letter.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Запуск печати первого текста
+      // Когда закончит печатать -> покажет кнопку readyBtn
+      setTimeout(() => {
+        typeWriter(letterTextField, textCongratulation, 35, () => {
+           readyBtn.style.display = 'inline-block'; // Показываем вторую кнопку
+        });
+      }, 300);
     });
 
+    // 2. Нажатие на "Получить данные"
     readyBtn.addEventListener('click', () => {
       readyBtn.classList.add('hidden-btn'); // Скрываем кнопку
       hint.style.display = 'block';
@@ -301,9 +292,9 @@
       
       hint.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-      // Запускаем печать текста
+      // Запуск печати второго текста
       setTimeout(() => {
-        typeWriter(message);
+        typeWriter(hintTextField, textHint, 40, null);
       }, 500);
     });
   </script>
