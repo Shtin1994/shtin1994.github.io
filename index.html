@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Путешествие в 2026 🎄</title>
   <meta name="theme-color" content="#0b1020" />
+
+  <!-- 1. Красивые шрифты (Montserrat) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- 2. Фавиконка (иконка вкладки) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>">
+
+  <!-- 3. Meta-теги для красивых ссылок (если решишь отправить ссылку, а не QR) -->
+  <meta property="og:title" content="Секретное послание 🎄" />
+  <meta property="og:description" content="У меня есть кое-что важное для тебя..." />
+  <meta property="og:type" content="website" />
+
   <style>
     :root{
       --bg1:#060913;
@@ -15,8 +29,9 @@
       --border: rgba(255,255,255,.14);
       --shadow: 0 30px 80px rgba(0,0,0,.60);
       --radius: 22px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      /* Обновленный шрифт */
+      --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
       --gold: #f6c453;
       --green:#22c55e;
       --violet:#8b5cf6;
@@ -25,7 +40,7 @@
     *{ box-sizing:border-box; }
     body{
       margin:0;
-      min-height:100svh;
+      min-height:100svh; /* svh лучше для мобильных */
       display:flex;
       align-items:center;
       justify-content:center;
@@ -40,290 +55,174 @@
       overflow-x:hidden;
     }
 
-    /* ✨ мягкое мерцание */
+    /* ✨ Мерцание фона */
     .glow{
-      position: fixed;
-      inset: -40px;
+      position: fixed; inset: -40px;
       background:
         radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.45) 40%, transparent 60%),
-        radial-gradient(1.5px 1.5px at 40% 70%, rgba(255,255,255,.28) 40%, transparent 60%),
-        radial-gradient(2px 2px at 75% 30%, rgba(255,255,255,.22) 40%, transparent 60%),
         radial-gradient(1.5px 1.5px at 85% 75%, rgba(255,255,255,.20) 40%, transparent 60%);
-      opacity: .55;
-      filter: blur(.2px);
+      opacity: .55; filter: blur(.2px);
       animation: twinkle 6s ease-in-out infinite alternate;
-      pointer-events:none;
-      z-index:0;
+      pointer-events:none; z-index:0;
     }
-    @keyframes twinkle{
-      from{ opacity:.35; transform: translateY(0); }
-      to{ opacity:.60; transform: translateY(6px); }
-    }
+    @keyframes twinkle{ from{opacity:.35; transform:translateY(0);} to{opacity:.60; transform:translateY(6px);} }
 
-    /* ❄️ снег (без JS) */
+    /* ❄️ Снег */
     .snow, .snow:before, .snow:after{
-      position: fixed;
-      inset: 0;
-      content:"";
-      pointer-events:none;
+      position: fixed; inset: 0; content:""; pointer-events:none;
       background-image:
         radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.75) 45%, transparent 55%),
-        radial-gradient(2px 2px at 80px 120px, rgba(255,255,255,.60) 45%, transparent 55%),
         radial-gradient(1.6px 1.6px at 140px 90px, rgba(255,255,255,.55) 45%, transparent 55%),
-        radial-gradient(1.4px 1.4px at 220px 160px, rgba(255,255,255,.45) 45%, transparent 55%),
-        radial-gradient(1.8px 1.8px at 320px 40px, rgba(255,255,255,.52) 45%, transparent 55%),
-        radial-gradient(1.2px 1.2px at 380px 140px, rgba(255,255,255,.40) 45%, transparent 55%),
-        radial-gradient(1.6px 1.6px at 520px 80px, rgba(255,255,255,.48) 45%, transparent 55%),
         radial-gradient(2px 2px at 640px 150px, rgba(255,255,255,.58) 45%, transparent 55%);
-      background-size: 700px 260px;
-      opacity: .40;
-      filter: blur(.15px);
-      z-index: 1;
+      background-size: 600px 300px; opacity: .40; filter: blur(.15px); z-index: 1;
     }
     .snow{ animation: snowFall 18s linear infinite; }
-    .snow:before{
-      opacity:.28;
-      transform: translateY(-260px);
-      animation: snowFall 26s linear infinite;
-    }
-    .snow:after{
-      opacity:.22;
-      transform: translateY(-520px);
-      animation: snowFall 34s linear infinite;
-    }
-    @keyframes snowFall{
-      from{ background-position: 0 0; }
-      to{ background-position: 0 820px; }
-    }
+    .snow:before{ opacity:.28; transform: translateY(-300px); animation: snowFall 26s linear infinite; }
+    .snow:after{ opacity:.22; transform: translateY(-600px); animation: snowFall 34s linear infinite; }
+    @keyframes snowFall{ from{ background-position: 0 0; } to{ background-position: 0 900px; } }
 
-    .wrap{
-      width:min(740px, 100%);
-      position:relative;
-      z-index:2;
-    }
+    .wrap{ width:min(740px, 100%); position:relative; z-index:2; }
 
     .card{
-      background: var(--card);
-      border:1px solid var(--border);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius);
-      overflow:hidden;
-      backdrop-filter: blur(12px);
-      position:relative;
+      background: var(--card); border:1px solid var(--border);
+      box-shadow: var(--shadow); border-radius: var(--radius);
+      overflow:hidden; backdrop-filter: blur(12px); position:relative;
+      transition: height 0.3s ease;
     }
 
     .topbar{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:14px 18px;
-      border-bottom:1px solid var(--border);
-      background: rgba(0,0,0,.16);
+      display:flex; align-items:center; gap:10px; padding:14px 18px;
+      border-bottom:1px solid var(--border); background: rgba(0,0,0,.16);
     }
-
     .dot{ width:10px; height:10px; border-radius:999px; background: rgba(255,255,255,.22); }
     .badge{
-      margin-left:8px;
-      font-size:12px;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      color: rgba(243,244,246,.86);
-      display:flex;
-      align-items:center;
-      gap:8px;
+      margin-left:8px; font-size:11px; letter-spacing:.10em; font-weight: 700;
+      text-transform:uppercase; color: rgba(243,244,246,.86);
+      display:flex; align-items:center; gap:8px;
     }
     .badge span{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(246,196,83,.25);
-      background: rgba(246,196,83,.10);
+      padding:6px 12px; border-radius:999px;
+      border:1px solid rgba(246,196,83,.25); background: rgba(246,196,83,.10);
     }
 
-    .content{ padding:22px 18px 18px; }
+    .content{ padding:24px 20px 22px; }
 
     h1{
-      margin:0 0 8px;
-      font-size:22px;
-      font-weight:800;
-      letter-spacing:.01em;
+      margin:0 0 10px; font-size:24px; font-weight:800;
+      letter-spacing:-0.02em; line-height: 1.3;
     }
 
-    p{
-      margin:10px 0;
-      line-height:1.6;
-      color: rgba(243,244,246,.93);
-    }
+    p{ margin:10px 0; line-height:1.65; color: rgba(243,244,246,.93); font-size: 15px; }
+    .muted{ color: var(--muted); font-size:13px; }
 
-    .muted{ color: var(--muted); font-size:14px; }
-
-    .ctaRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:14px;
-    }
+    .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; }
 
     button{
-      appearance:none;
-      border:1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.07);
-      color: var(--text);
-      padding:12px 16px;
-      border-radius: 999px;
-      cursor:pointer;
-      font-weight:800;
-      letter-spacing:.02em;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease, filter .12s ease;
+      appearance:none; border:none; outline:none;
+      padding:14px 24px; border-radius: 999px; cursor:pointer;
+      font-weight:700; font-family: var(--sans); letter-spacing:.02em; font-size: 14px;
+      transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
+      position:relative; overflow:hidden;
     }
-    button:active{ transform: scale(.985); }
-    button:hover{ background: rgba(255,255,255,.11); border-color: rgba(255,255,255,.22); }
-
+    button:active{ transform: scale(.97); }
+    
     .primary{
       color:#0b1020;
-      border-color: rgba(255,255,255,.22);
-      background:
-        linear-gradient(135deg, rgba(246,196,83,.98), rgba(34,197,94,.82));
-      box-shadow: 0 12px 30px rgba(34,197,94,.10);
+      background: linear-gradient(135deg, #f6c453, #4ade80);
+      box-shadow: 0 4px 20px rgba(34,197,94,.25);
     }
-    .primary:hover{ filter: brightness(1.02); }
+    .primary:hover{ box-shadow: 0 6px 24px rgba(34,197,94,.40); filter: brightness(1.05); }
 
-    .divider{ height:1px; background: var(--border); margin:18px 0; }
+    /* Кнопки при скрытии */
+    .hidden-btn {
+        display: none;
+    }
+
+    .divider{ height:1px; background: var(--border); margin:20px 0; opacity: 0.6; }
+
+    .letter{ display:none; animation: fadeUp .6s ease forwards; }
 
     .seal{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      font-family: var(--mono);
-      font-size:12px;
-      color: rgba(243,244,246,.76);
-      border:1px dashed rgba(255,255,255,.22);
-      padding:8px 10px;
-      border-radius: 14px;
+      display:inline-flex; align-items:center; gap:8px;
+      font-family: var(--mono); font-size:11px; color: rgba(243,244,246,.60);
+      border:1px dashed rgba(255,255,255,.20); padding:6px 10px; border-radius: 8px;
+      margin-bottom: 12px;
     }
 
-    .letter{ display:none; animation: fadeUp .55s ease forwards; }
-
     .hint{
-      display:none;
-      margin-top:14px;
-      border:1px solid rgba(246,196,83,.28);
-      background: rgba(246,196,83,.10);
-      border-radius: 16px;
-      padding:14px 14px;
-      animation: fadeUp .45s ease forwards;
-      position:relative;
-      overflow:hidden;
+      display:none; margin-top:16px;
+      border:1px solid rgba(246,196,83,.28); background: rgba(246,196,83,.08);
+      border-radius: 16px; padding:16px;
+      position:relative; overflow:hidden;
     }
 
     .hint .label{
-      font-family: var(--mono);
-      font-size:12px;
-      color: rgba(243,244,246,.78);
-      margin-bottom:8px;
-      letter-spacing:.06em;
-      text-transform: uppercase;
+      font-family: var(--mono); font-size:11px; color: var(--gold);
+      margin-bottom:6px; letter-spacing:.08em; text-transform: uppercase; font-weight: 700;
     }
 
+    /* Эффект печатания */
     .hint .text{
-      font-size:16px;
-      color: rgba(243,244,246,.96);
-      white-space: pre-wrap;
+      font-size:16px; color: #fff; white-space: pre-wrap;
+      font-weight: 500; line-height: 1.6;
     }
+    .typing-cursor::after {
+      content: '▋';
+      display: inline-block;
+      vertical-align: bottom;
+      animation: blink 1s step-start infinite;
+      color: var(--gold);
+      margin-left: 2px;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
 
-    @keyframes fadeUp{
-      from{ opacity:0; transform: translateY(12px); }
-      to{ opacity:1; transform: translateY(0); }
-    }
+    @keyframes fadeUp{ from{ opacity:0; transform: translateY(15px); } to{ opacity:1; transform: translateY(0); } }
 
-    /* 🎥 глитч-эффект на подсказке (короткий, при появлении) */
-    .hint.glitch{
-      animation: hintGlitch 520ms ease-in-out 1;
-    }
-    .hint.glitch::before,
-    .hint.glitch::after{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: linear-gradient(90deg, rgba(139,92,246,.18), rgba(34,197,94,.14));
-      mix-blend-mode: screen;
-      opacity: .0;
-      pointer-events:none;
-    }
-    .hint.glitch::before{ animation: scan 520ms linear 1; }
-    .hint.glitch::after{ animation: scan2 520ms linear 1; }
-
-    .hint.glitch .text{
-      text-shadow:
-        2px 0 rgba(34,197,94,.35),
-        -2px 0 rgba(139,92,246,.35);
-      animation: textJitter 520ms linear 1;
-    }
-
-    @keyframes hintGlitch{
-      0%{ transform: translateY(0); filter:none; }
-      15%{ transform: translateY(-1px) skewX(1deg); filter: brightness(1.1) contrast(1.05); }
-      30%{ transform: translateY(1px) skewX(-1deg); }
-      45%{ transform: translateY(-1px); }
-      60%{ transform: translateY(1px); }
-      100%{ transform: translateY(0); filter:none; }
-    }
-    @keyframes textJitter{
-      0%{ transform: translate(0,0); opacity:1; }
-      20%{ transform: translate(1px,-1px); }
-      40%{ transform: translate(-2px,1px); }
-      60%{ transform: translate(2px,0); }
-      80%{ transform: translate(-1px,-1px); }
-      100%{ transform: translate(0,0); }
-    }
-    @keyframes scan{
-      0%{ opacity:0; clip-path: inset(0 0 92% 0); }
-      20%{ opacity:.9; clip-path: inset(10% 0 72% 0); }
-      40%{ opacity:.35; clip-path: inset(38% 0 44% 0); }
-      60%{ opacity:.85; clip-path: inset(62% 0 20% 0); }
-      80%{ opacity:.25; clip-path: inset(80% 0 8% 0); }
-      100%{ opacity:0; clip-path: inset(92% 0 0 0); }
-    }
-    @keyframes scan2{
-      0%{ opacity:0; clip-path: inset(88% 0 0 0); }
-      25%{ opacity:.75; clip-path: inset(70% 0 12% 0); }
-      50%{ opacity:.30; clip-path: inset(40% 0 42% 0); }
-      75%{ opacity:.65; clip-path: inset(16% 0 70% 0); }
-      100%{ opacity:0; clip-path: inset(0 0 88% 0); }
-    }
-
-    /* новогодний уголок */
+    /* Уголок */
     .corner{
-      position:absolute;
-      right:16px;
-      top:56px;
-      font-size:20px;
-      opacity:.9;
-      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
-      user-select:none;
+      position:absolute; right:16px; top:60px; font-size:24px;
+      opacity:.8; filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
     }
+
+    /* Анимация глитча для контейнера подсказки */
+    .glitch-anim { animation: hintGlitch .5s ease-in-out 1; }
+    @keyframes hintGlitch{
+      0%{ transform: translate(0); }
+      20%{ transform: translate(-2px, 2px); }
+      40%{ transform: translate(-2px, -2px); }
+      60%{ transform: translate(2px, 2px); }
+      80%{ transform: translate(2px, -2px); }
+      100%{ transform: translate(0); }
+    }
+
   </style>
 </head>
 
 <body>
+  <!-- Аудио плеер (скрытый) -->
+  <!-- Убедись, что файл music.mp3 лежит в той же папке на GitHub! -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
   <div class="glow"></div>
   <div class="snow"></div>
 
   <div class="wrap">
-    <div class="card" role="main" aria-label="Путешествие в 2026">
+    <div class="card" role="main">
       <div class="topbar">
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-        <div class="badge"><span>🎄 Путешествие в 2026 ✨</span></div>
+        <span class="dot" style="background:#ef4444"></span>
+        <span class="dot" style="background:#f59e0b"></span>
+        <span class="dot" style="background:#22c55e"></span>
+        <div class="badge"><span>🎄 Time Travel: 2026</span></div>
       </div>
 
-      <div class="corner">❄️</div>
+      <div class="corner">✨</div>
 
       <div class="content">
-        <h1>Ты готова к путешествию в 2026 год? ✨</h1>
+        <h1>Ты готова к путешествию в 2026 год?</h1>
         <p class="muted">
-          Если ты читаешь это — значит ты уже на первом шаге.
+          Если ты читаешь это — значит связь установлена.
           Дальше будет только интереснее.
         </p>
 
@@ -331,30 +230,28 @@
           <button class="primary" id="openLetterBtn">Открыть письмо 💌</button>
         </div>
 
-        <div class="divider"></div>
+        <div class="divider" style="display:none" id="mainDivider"></div>
 
         <div class="letter" id="letter">
-          <div class="seal">28.12 • канал связи установлен</div>
+          <div class="seal">28.12 • ЗАЩИЩЕННЫЙ КАНАЛ СВЯЗИ</div>
 
-          <p id="letterText">
-            Спасибо тебе за этот год. ✨
-            За тепло, за поддержку, за смех, за моменты, которые я запомню. 🤍
-            Мне правда очень повезло с тобой — и я хочу, чтобы дальше было ещё сильнее. 🎄
+          <p id="letterText" style="font-weight: 500;">
+            Спасибо тебе за этот год. ✨<br>
+            За тепло, за поддержку, за смех и за моменты, которые останутся со мной навсегда. 🤍<br>
+            Мне правда очень повезло с тобой — и я хочу, чтобы дальше было только лучше. 🎄
           </p>
 
           <p class="muted">
-            Если ты готова — нажми кнопку ниже. Я дам тебе первую подсказку.
+            Нажми на кнопку ниже, чтобы получить координаты.
           </p>
 
           <div class="ctaRow">
-            <button class="primary" id="readyBtn">Я готова ✅</button>
+            <button class="primary" id="readyBtn">Получить данные ✅</button>
           </div>
 
           <div class="hint" id="hint">
-            <div class="label">Первая подсказка</div>
-            <div class="text">«28 декабря. Зафиксирован перелом времени.
-Первый ключ — у входной двери.
-Подойди к двери и посмотри над глазком.»</div>
+            <div class="label">Входящая передача...</div>
+            <div class="text" id="typewriterText"></div>
           </div>
         </div>
       </div>
@@ -366,23 +263,48 @@
     const readyBtn = document.getElementById('readyBtn');
     const letter = document.getElementById('letter');
     const hint = document.getElementById('hint');
+    const typewriterText = document.getElementById('typewriterText');
+    const mainDivider = document.getElementById('mainDivider');
+    const audio = document.getElementById('bgMusic');
+
+    // Текст подсказки
+    const message = "«28 декабря. Зафиксирован перелом времени.\nПервый ключ находится у входной двери.\n\nПодойди к двери и посмотри над глазком.»";
+
+    // Функция эффекта печатной машинки
+    function typeWriter(text, i = 0) {
+      if (i < text.length) {
+        typewriterText.innerHTML = text.substring(0, i+1) + '<span class="typing-cursor"></span>';
+        setTimeout(() => typeWriter(text, i + 1), 40); // Скорость печати (меньше - быстрее)
+      } else {
+        typewriterText.innerHTML = text; // Убираем курсор в конце
+      }
+    }
 
     openLetterBtn.addEventListener('click', () => {
+      // 1. Включаем музыку (важно делать это по клику!)
+      audio.volume = 0.4; // Громкость 40%
+      audio.play().catch(e => console.log("Audio play failed:", e));
+
+      // 2. Интерфейс
+      openLetterBtn.classList.add('hidden-btn'); // Скрываем кнопку
+      mainDivider.style.display = 'block';
       letter.style.display = 'block';
-      hint.style.display = 'none';
-      hint.classList.remove('glitch');
+      
+      // Плавный скролл
       letter.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
     readyBtn.addEventListener('click', () => {
+      readyBtn.classList.add('hidden-btn'); // Скрываем кнопку
       hint.style.display = 'block';
+      hint.classList.add('glitch-anim');
+      
       hint.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-      // короткий глитч при появлении
-      hint.classList.remove('glitch');
-      void hint.offsetWidth; // reflow, чтобы анимация перезапускалась
-      hint.classList.add('glitch');
-      setTimeout(() => hint.classList.remove('glitch'), 650);
+      // Запускаем печать текста
+      setTimeout(() => {
+        typeWriter(message);
+      }, 500);
     });
   </script>
 </body>
