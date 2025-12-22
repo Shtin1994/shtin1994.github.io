@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Координата 1 — Дверь 🚪</title>
+  <meta name="theme-color" content="#0b1020" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <meta property="og:title" content="Координата 1 найдена ✅" />
+  <meta property="og:description" content="Продолжаем путешествие..." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root{
+      --bg1:#060913;
+      --bg2:#0b1020;
+      --card: rgba(10, 16, 32, .78);
+      --text:#f3f4f6;
+      --muted: rgba(243,244,246,.70);
+      --border: rgba(255,255,255,.14);
+      --shadow: 0 30px 80px rgba(0,0,0,.60);
+      --radius: 22px;
+      --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, monospace;
+      --gold: #f6c453;
+      --green:#22c55e;
+      --violet:#8b5cf6;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0; min-height:100svh; display:flex; align-items:center; justify-content:center;
+      padding:20px; font-family:var(--sans); color:var(--text);
+      background:
+        radial-gradient(1100px 520px at 12% 12%, rgba(139,92,246,.22), transparent 60%),
+        radial-gradient(900px 520px at 88% 18%, rgba(34,197,94,.14), transparent 58%),
+        radial-gradient(1200px 700px at 50% 100%, rgba(246,196,83,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    .glow{
+      position: fixed; inset: -40px; opacity: .55; filter: blur(.2px); pointer-events:none; z-index:0;
+      background: radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.45) 40%, transparent 60%),
+                  radial-gradient(1.5px 1.5px at 85% 75%, rgba(255,255,255,.20) 40%, transparent 60%);
+      animation: twinkle 6s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle{ from{opacity:.35; transform:translateY(0);} to{opacity:.60; transform:translateY(6px);} }
+
+    .snow, .snow:before, .snow:after{
+      position: fixed; inset: 0; content:""; pointer-events:none; z-index: 1; opacity: .40; filter: blur(.15px);
+      background-size: 600px 300px;
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.75) 45%, transparent 55%),
+        radial-gradient(1.6px 1.6px at 140px 90px, rgba(255,255,255,.55) 45%, transparent 55%),
+        radial-gradient(2px 2px at 640px 150px, rgba(255,255,255,.58) 45%, transparent 55%);
+    }
+    .snow{ animation: snowFall 18s linear infinite; }
+    .snow:before{ opacity:.28; transform: translateY(-300px); animation: snowFall 26s linear infinite; }
+    .snow:after{ opacity:.22; transform: translateY(-600px); animation: snowFall 34s linear infinite; }
+    @keyframes snowFall{ from{ background-position: 0 0; } to{ background-position: 0 900px; } }
+
+    .wrap{ width:min(740px, 100%); position:relative; z-index:2; }
+    .card{
+      background: var(--card); border:1px solid var(--border);
+      box-shadow: var(--shadow); border-radius: var(--radius);
+      overflow:hidden; backdrop-filter: blur(12px); position:relative;
+    }
+    .topbar{
+      display:flex; align-items:center; gap:10px; padding:14px 18px;
+      border-bottom:1px solid var(--border); background: rgba(0,0,0,.16);
+    }
+    .dot{ width:10px; height:10px; border-radius:999px; background: rgba(255,255,255,.22); }
+
+    .badge{
+      margin-left:8px; font-size:11px; letter-spacing:.10em; font-weight: 800;
+      text-transform:uppercase; color: rgba(243,244,246,.86);
+      display:flex; align-items:center; gap:8px;
+    }
+    .badge span{
+      padding:6px 12px; border-radius:999px;
+      border:1px solid rgba(246,196,83,.25);
+      background: rgba(246,196,83,.10);
+    }
+
+    .corner{ position:absolute; right:16px; top:60px; font-size:24px; opacity:.85; }
+
+    .content{ padding:24px 20px 22px; }
+    h1{ margin:0 0 10px; font-size:24px; font-weight:800; letter-spacing:-0.02em; line-height: 1.3; }
+    p{ margin:10px 0; line-height:1.65; color: rgba(243,244,246,.93); font-size: 15px; }
+    .muted{ color: var(--muted); font-size:13px; }
+
+    .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; }
+
+    button{
+      appearance:none; border:none; outline:none;
+      padding:14px 24px; border-radius: 999px; cursor:pointer;
+      font-weight:800; font-family: var(--sans); letter-spacing:.02em; font-size: 14px;
+      transition: all .2s; position:relative; overflow:hidden;
+    }
+    button:active{ transform: scale(.97); }
+
+    .primary{
+      color:#0b1020;
+      background: linear-gradient(135deg, #f6c453, #4ade80);
+      box-shadow: 0 4px 20px rgba(34,197,94,.25);
+    }
+    .primary:hover{ box-shadow: 0 6px 24px rgba(34,197,94,.40); filter: brightness(1.05); }
+
+    .divider{ height:1px; background: var(--border); margin:20px 0; opacity: 0.6; }
+
+    .seal{
+      display:inline-flex; align-items:center; gap:8px;
+      font-family: var(--mono); font-size:11px; color: rgba(243,244,246,.60);
+      border:1px dashed rgba(255,255,255,.20); padding:6px 10px; border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .typing-area{ white-space: pre-wrap; min-height: 18px; }
+    .typing-cursor::after{
+      content: '▋'; display: inline-block; vertical-align: bottom;
+      animation: blink 1s step-start infinite; color: var(--gold); margin-left: 2px;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hint{
+      display:none; margin-top:16px;
+      border:1px solid rgba(246,196,83,.28);
+      background: rgba(246,196,83,.08);
+      border-radius: 16px; padding:16px;
+      overflow:hidden;
+    }
+    .hint .label{
+      font-family: var(--mono); font-size:11px; color: var(--gold);
+      margin-bottom:6px; letter-spacing:.08em; text-transform: uppercase; font-weight: 800;
+    }
+    .hint .text{ font-size:16px; color: #fff; font-weight: 500; line-height: 1.6; }
+
+    .glitch-anim { animation: hintGlitch .5s ease-in-out 1; }
+    @keyframes hintGlitch{
+      0%, 100%{ transform: translate(0); filter:none; }
+      20%{ transform: translate(-2px, 2px); filter: brightness(1.08); }
+      40%{ transform: translate(-2px, -2px); }
+      60%{ transform: translate(2px, 2px); }
+      80%{ transform: translate(2px, -2px); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="glow"></div>
+  <div class="snow"></div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="topbar">
+        <span class="dot" style="background:#ef4444"></span>
+        <span class="dot" style="background:#f59e0b"></span>
+        <span class="dot" style="background:#22c55e"></span>
+        <div class="badge"><span>🚪 КООРДИНАТА 1 • ВХОДНАЯ ДВЕРЬ</span></div>
+      </div>
+
+      <div class="corner">❄️</div>
+
+      <div class="content">
+        <h1>Ты нашла его. Значит, ты в игре. ✅</h1>
+        <p class="muted">
+          Если ты читаешь это — значит ты прямо у входной двери (и, возможно, только что посмотрела над глазком 👀).
+        </p>
+
+        <div class="divider"></div>
+
+        <div class="seal">28.12 • протокол: продолжать</div>
+
+        <p id="mainText" class="typing-area"></p>
+
+        <div class="ctaRow">
+          <button class="primary" id="nextBtn">Получить следующую подсказку 🔐</button>
+        </div>
+
+        <div class="hint" id="hint">
+          <div class="label">сообщение принято…</div>
+          <div class="text typing-area" id="hintText"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- НАСТРОЙКИ ---
+    const textIntro =
+      "Ключ найден. 🚪✨\n" +
+      "Теперь маршрут начинает собираться по-настоящему.\n\n" +
+      "Готова сделать следующий шаг?";
+
+    // ВАЖНО: поменяй этот текст под то место, где будет QR №3.
+    // Примеры:
+    // - "Следующий ключ — там, где день заканчивается. Ищи в спальне. Под подушкой."
+    // - "Следующий ключ — там, где считают дни. Посмотри на календарь/часы."
+    const textNextHint =
+      "«Координата подтверждена.\n" +
+      "Следующий ключ — там, где день заканчивается.\n" +
+      "Ищи в спальне. Под подушкой. 🕯️»";
+
+    // --- ЛОГИКА ---
+    const mainTextField = document.getElementById('mainText');
+    const nextBtn = document.getElementById('nextBtn');
+    const hint = document.getElementById('hint');
+    const hintTextField = document.getElementById('hintText');
+
+    function typeWriter(element, text, speed, callback) {
+      let i = 0;
+      function type() {
+        if (i < text.length) {
+          element.innerHTML = text.substring(0, i + 1) + '<span class="typing-cursor"></span>';
+          i++;
+          setTimeout(type, speed);
+        } else {
+          element.innerHTML = text;
+          if (callback) callback();
+        }
+      }
+      type();
+    }
+
+    // напечатать вступление сразу
+    typeWriter(mainTextField, textIntro, 28);
+
+    nextBtn.addEventListener('click', () => {
+      nextBtn.disabled = true;
+      nextBtn.style.opacity = "0.6";
+      nextBtn.style.cursor = "default";
+
+      hint.style.display = 'block';
+      hint.classList.add('glitch-anim');
+      hint.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      setTimeout(() => {
+        typeWriter(hintTextField, textNextHint, 34);
+      }, 350);
+    });
+  </script>
+</body>
+</html>
