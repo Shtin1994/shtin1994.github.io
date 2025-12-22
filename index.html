@@ -1,11 +1,289 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Shtin1994</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Путешествие в 2026</title>
+  <meta name="theme-color" content="#0b0f17" />
+  <style>
+    :root{
+      --bg1:#070a10;
+      --bg2:#0b0f17;
+      --card:#0f172a;
+      --text:#e5e7eb;
+      --muted:#a1a1aa;
+      --accent:#8b5cf6;
+      --accent2:#22c55e;
+      --danger:#ef4444;
+      --border: rgba(255,255,255,.12);
+      --shadow: 0 24px 60px rgba(0,0,0,.55);
+      --radius: 22px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      min-height:100svh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      font-family:var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(1200px 500px at 15% 15%, rgba(139,92,246,.18), transparent 60%),
+        radial-gradient(900px 500px at 85% 25%, rgba(34,197,94,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+
+    .wrap{
+      width:min(720px, 100%);
+    }
+
+    .card{
+      background: rgba(15,23,42,.82);
+      border:1px solid var(--border);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      overflow:hidden;
+      position:relative;
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:14px 18px;
+      border-bottom:1px solid var(--border);
+      background: rgba(0,0,0,.14);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: rgba(255,255,255,.25);
+    }
+    .title{
+      margin-left:8px;
+      font-size:13px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color: rgba(229,231,235,.85);
+    }
+
+    .content{
+      padding:22px 18px 18px;
+    }
+
+    h1{
+      margin:0 0 6px;
+      font-size:22px;
+      font-weight:700;
+    }
+    p{
+      margin:10px 0;
+      line-height:1.55;
+      color: rgba(229,231,235,.92);
+    }
+    .muted{
+      color: var(--muted);
+      font-size:14px;
+    }
+
+    .ctaRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    button{
+      appearance:none;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding:12px 16px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight:700;
+      letter-spacing:.02em;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    button:active{ transform: scale(.98); }
+    button:hover{ background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.18); }
+
+    .primary{
+      background: linear-gradient(135deg, rgba(139,92,246,.95), rgba(34,197,94,.75));
+      border-color: rgba(255,255,255,.22);
+      color: #081018;
+    }
+    .primary:hover{ filter: brightness(1.03); }
+
+    .ghost{
+      background: transparent;
+    }
+
+    .divider{
+      height:1px;
+      background: var(--border);
+      margin:18px 0;
+    }
+
+    .seal{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-family: var(--mono);
+      font-size:12px;
+      color: rgba(229,231,235,.75);
+      border:1px dashed rgba(255,255,255,.20);
+      padding:8px 10px;
+      border-radius: 14px;
+    }
+
+    .letter{
+      display:none;
+      animation: fadeUp .5s ease forwards;
+    }
+
+    .hint{
+      display:none;
+      margin-top:14px;
+      border:1px solid rgba(139,92,246,.25);
+      background: rgba(139,92,246,.10);
+      border-radius: 16px;
+      padding:14px 14px;
+      animation: fadeUp .45s ease forwards;
+    }
+
+    .hint .label{
+      font-family: var(--mono);
+      font-size:12px;
+      color: rgba(229,231,235,.75);
+      margin-bottom:8px;
+      letter-spacing:.06em;
+      text-transform: uppercase;
+    }
+
+    .hint .text{
+      font-size:16px;
+      color: rgba(229,231,235,.95);
+      white-space: pre-wrap;
+    }
+
+    @keyframes fadeUp{
+      from{ opacity:0; transform: translateY(10px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>GitHub Pages работает</h1>
-  <p>Если ты это видишь — всё сделано правильно.</p>
+  <div class="wrap">
+    <div class="card" role="main" aria-label="Путешествие в 2026">
+      <div class="topbar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <div class="title">Путешествие в 2026</div>
+      </div>
+
+      <div class="content">
+        <!-- Экран 1: «Ты готова?» -->
+        <h1>Ты готова к путешествию в 2026 год?</h1>
+        <p class="muted">
+          Если ты читаешь это — значит ты уже на первом шаге.
+          Дальше будет только интереснее.
+        </p>
+
+        <div class="ctaRow" id="startButtons">
+          <button class="primary" id="openLetterBtn">Открыть письмо</button>
+          <button class="ghost" id="muteBtn" aria-label="Без звука">Тихий режим</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Экран 2: письмо (появляется после «Открыть письмо») -->
+        <div class="letter" id="letter">
+          <div class="seal">28.12 • канал связи установлен</div>
+
+          <p id="letterText">
+            <!-- ТЕКСТ ПИСЬМА — замени на свой -->
+            Спасибо тебе за этот год.
+            За тепло, за поддержку, за смех, за моменты, которые я запомню.
+            Мне правда очень повезло с тобой — и я хочу, чтобы дальше было ещё сильнее.
+          </p>
+
+          <p class="muted">
+            Если ты готова — нажми кнопку ниже. Я дам тебе первую подсказку.
+          </p>
+
+          <div class="ctaRow">
+            <button class="primary" id="readyBtn">Я готова</button>
+            <button class="ghost" id="replayBtn">Перечитать</button>
+          </div>
+
+          <!-- Экран 3: подсказка -->
+          <div class="hint" id="hint">
+            <div class="label">Первая подсказка</div>
+            <div class="text">28 декабря. Зафиксирован перелом времени. Первый ключ — там, где день кончается.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="muted" style="margin:12px 6px 0;">
+      Подсказка появится только после её действия — так сюрприз не раскрывается раньше времени.
+    </p>
+  </div>
+
+  <!-- Опционально: очень тихий “щелчок” при открытии письма.
+       Если не нужно — удали тег audio и кнопку «Тихий режим». -->
+  <audio id="tap" preload="auto">
+    <!-- можешь добавить assets/tap.mp3 и поставить src="assets/tap.mp3" -->
+  </audio>
+
+  <script>
+    const openLetterBtn = document.getElementById('openLetterBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const readyBtn = document.getElementById('readyBtn');
+    const replayBtn = document.getElementById('replayBtn');
+
+    const letter = document.getElementById('letter');
+    const hint = document.getElementById('hint');
+    const tap = document.getElementById('tap');
+
+    let muted = false;
+
+    function softTap(){
+      if (muted) return;
+      // Если добавишь файл tap.mp3 — заработает.
+      try { tap.currentTime = 0; tap.play(); } catch(e) {}
+    }
+
+    openLetterBtn.addEventListener('click', () => {
+      softTap();
+      letter.style.display = 'block';
+      hint.style.display = 'none';
+      // Прокрутка на мобильных, если контент выше
+      letter.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    readyBtn.addEventListener('click', () => {
+      softTap();
+      hint.style.display = 'block';
+      hint.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    replayBtn.addEventListener('click', () => {
+      softTap();
+      hint.style.display = 'none';
+      letter.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    muteBtn.addEventListener('click', () => {
+      muted = !muted;
+      muteBtn.textContent = muted ? 'Тихий режим: ВКЛ' : 'Тихий режим';
+    });
+  </script>
 </body>
 </html>
