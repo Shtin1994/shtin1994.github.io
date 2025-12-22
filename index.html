@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Путешествие в 2026</title>
-  <meta name="theme-color" content="#0b0f17" />
+  <title>Путешествие в 2026 🎄</title>
+  <meta name="theme-color" content="#0b1020" />
   <style>
     :root{
-      --bg1:#070a10;
-      --bg2:#0b0f17;
-      --card:#0f172a;
-      --text:#e5e7eb;
-      --muted:#a1a1aa;
-      --accent:#8b5cf6;
-      --accent2:#22c55e;
-      --danger:#ef4444;
-      --border: rgba(255,255,255,.12);
-      --shadow: 0 24px 60px rgba(0,0,0,.55);
+      --bg1:#060913;
+      --bg2:#0b1020;
+      --card: rgba(10, 16, 32, .78);
+      --text:#f3f4f6;
+      --muted: rgba(243,244,246,.70);
+      --border: rgba(255,255,255,.14);
+      --shadow: 0 30px 80px rgba(0,0,0,.60);
       --radius: 22px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      --gold: #f6c453;
+      --green:#22c55e;
+      --violet:#8b5cf6;
     }
 
     *{ box-sizing:border-box; }
@@ -33,63 +33,131 @@
       font-family:var(--sans);
       color:var(--text);
       background:
-        radial-gradient(1200px 500px at 15% 15%, rgba(139,92,246,.18), transparent 60%),
-        radial-gradient(900px 500px at 85% 25%, rgba(34,197,94,.12), transparent 60%),
+        radial-gradient(1100px 520px at 12% 12%, rgba(139,92,246,.22), transparent 60%),
+        radial-gradient(900px 520px at 88% 18%, rgba(34,197,94,.14), transparent 58%),
+        radial-gradient(1200px 700px at 50% 100%, rgba(246,196,83,.10), transparent 60%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    /* ✨ мягкое мерцание */
+    .glow{
+      position: fixed;
+      inset: -40px;
+      background:
+        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.45) 40%, transparent 60%),
+        radial-gradient(1.5px 1.5px at 40% 70%, rgba(255,255,255,.28) 40%, transparent 60%),
+        radial-gradient(2px 2px at 75% 30%, rgba(255,255,255,.22) 40%, transparent 60%),
+        radial-gradient(1.5px 1.5px at 85% 75%, rgba(255,255,255,.20) 40%, transparent 60%);
+      opacity: .55;
+      filter: blur(.2px);
+      animation: twinkle 6s ease-in-out infinite alternate;
+      pointer-events:none;
+      z-index:0;
+    }
+    @keyframes twinkle{
+      from{ opacity:.35; transform: translateY(0); }
+      to{ opacity:.60; transform: translateY(6px); }
+    }
+
+    /* ❄️ снег (без JS) */
+    .snow, .snow:before, .snow:after{
+      position: fixed;
+      inset: 0;
+      content:"";
+      pointer-events:none;
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.75) 45%, transparent 55%),
+        radial-gradient(2px 2px at 80px 120px, rgba(255,255,255,.60) 45%, transparent 55%),
+        radial-gradient(1.6px 1.6px at 140px 90px, rgba(255,255,255,.55) 45%, transparent 55%),
+        radial-gradient(1.4px 1.4px at 220px 160px, rgba(255,255,255,.45) 45%, transparent 55%),
+        radial-gradient(1.8px 1.8px at 320px 40px, rgba(255,255,255,.52) 45%, transparent 55%),
+        radial-gradient(1.2px 1.2px at 380px 140px, rgba(255,255,255,.40) 45%, transparent 55%),
+        radial-gradient(1.6px 1.6px at 520px 80px, rgba(255,255,255,.48) 45%, transparent 55%),
+        radial-gradient(2px 2px at 640px 150px, rgba(255,255,255,.58) 45%, transparent 55%);
+      background-size: 700px 260px;
+      opacity: .40;
+      filter: blur(.15px);
+      z-index: 1;
+    }
+    .snow{ animation: snowFall 18s linear infinite; }
+    .snow:before{
+      opacity:.28;
+      transform: translateY(-260px);
+      animation: snowFall 26s linear infinite;
+    }
+    .snow:after{
+      opacity:.22;
+      transform: translateY(-520px);
+      animation: snowFall 34s linear infinite;
+    }
+    @keyframes snowFall{
+      from{ background-position: 0 0; }
+      to{ background-position: 0 820px; }
     }
 
     .wrap{
-      width:min(720px, 100%);
+      width:min(740px, 100%);
+      position:relative;
+      z-index:2;
     }
 
     .card{
-      background: rgba(15,23,42,.82);
+      background: var(--card);
       border:1px solid var(--border);
       box-shadow: var(--shadow);
       border-radius: var(--radius);
       overflow:hidden;
+      backdrop-filter: blur(12px);
       position:relative;
-      backdrop-filter: blur(10px);
     }
 
     .topbar{
       display:flex;
-      gap:10px;
       align-items:center;
+      gap:10px;
       padding:14px 18px;
       border-bottom:1px solid var(--border);
-      background: rgba(0,0,0,.14);
-    }
-    .dot{
-      width:10px; height:10px; border-radius:999px;
-      background: rgba(255,255,255,.25);
-    }
-    .title{
-      margin-left:8px;
-      font-size:13px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      color: rgba(229,231,235,.85);
+      background: rgba(0,0,0,.16);
     }
 
-    .content{
-      padding:22px 18px 18px;
+    .dot{ width:10px; height:10px; border-radius:999px; background: rgba(255,255,255,.22); }
+    .badge{
+      margin-left:8px;
+      font-size:12px;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      color: rgba(243,244,246,.86);
+      display:flex;
+      align-items:center;
+      gap:8px;
     }
+    .badge span{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(246,196,83,.25);
+      background: rgba(246,196,83,.10);
+    }
+
+    .content{ padding:22px 18px 18px; }
 
     h1{
-      margin:0 0 6px;
+      margin:0 0 8px;
       font-size:22px;
-      font-weight:700;
+      font-weight:800;
+      letter-spacing:.01em;
     }
+
     p{
       margin:10px 0;
-      line-height:1.55;
-      color: rgba(229,231,235,.92);
+      line-height:1.6;
+      color: rgba(243,244,246,.93);
     }
-    .muted{
-      color: var(--muted);
-      font-size:14px;
-    }
+
+    .muted{ color: var(--muted); font-size:14px; }
 
     .ctaRow{
       display:flex;
@@ -100,35 +168,29 @@
 
     button{
       appearance:none;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.07);
       color: var(--text);
       padding:12px 16px;
       border-radius: 999px;
       cursor:pointer;
-      font-weight:700;
+      font-weight:800;
       letter-spacing:.02em;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease, filter .12s ease;
     }
-    button:active{ transform: scale(.98); }
-    button:hover{ background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.18); }
+    button:active{ transform: scale(.985); }
+    button:hover{ background: rgba(255,255,255,.11); border-color: rgba(255,255,255,.22); }
 
     .primary{
-      background: linear-gradient(135deg, rgba(139,92,246,.95), rgba(34,197,94,.75));
+      color:#0b1020;
       border-color: rgba(255,255,255,.22);
-      color: #081018;
+      background:
+        linear-gradient(135deg, rgba(246,196,83,.98), rgba(34,197,94,.82));
+      box-shadow: 0 12px 30px rgba(34,197,94,.10);
     }
-    .primary:hover{ filter: brightness(1.03); }
+    .primary:hover{ filter: brightness(1.02); }
 
-    .ghost{
-      background: transparent;
-    }
-
-    .divider{
-      height:1px;
-      background: var(--border);
-      margin:18px 0;
-    }
+    .divider{ height:1px; background: var(--border); margin:18px 0; }
 
     .seal{
       display:inline-flex;
@@ -136,31 +198,30 @@
       gap:8px;
       font-family: var(--mono);
       font-size:12px;
-      color: rgba(229,231,235,.75);
-      border:1px dashed rgba(255,255,255,.20);
+      color: rgba(243,244,246,.76);
+      border:1px dashed rgba(255,255,255,.22);
       padding:8px 10px;
       border-radius: 14px;
     }
 
-    .letter{
-      display:none;
-      animation: fadeUp .5s ease forwards;
-    }
+    .letter{ display:none; animation: fadeUp .55s ease forwards; }
 
     .hint{
       display:none;
       margin-top:14px;
-      border:1px solid rgba(139,92,246,.25);
-      background: rgba(139,92,246,.10);
+      border:1px solid rgba(246,196,83,.28);
+      background: rgba(246,196,83,.10);
       border-radius: 16px;
       padding:14px 14px;
       animation: fadeUp .45s ease forwards;
+      position:relative;
+      overflow:hidden;
     }
 
     .hint .label{
       font-family: var(--mono);
       font-size:12px;
-      color: rgba(229,231,235,.75);
+      color: rgba(243,244,246,.78);
       margin-bottom:8px;
       letter-spacing:.06em;
       text-transform: uppercase;
@@ -168,49 +229,117 @@
 
     .hint .text{
       font-size:16px;
-      color: rgba(229,231,235,.95);
+      color: rgba(243,244,246,.96);
       white-space: pre-wrap;
     }
 
     @keyframes fadeUp{
-      from{ opacity:0; transform: translateY(10px); }
+      from{ opacity:0; transform: translateY(12px); }
       to{ opacity:1; transform: translateY(0); }
+    }
+
+    /* 🎥 глитч-эффект на подсказке (короткий, при появлении) */
+    .hint.glitch{
+      animation: hintGlitch 520ms ease-in-out 1;
+    }
+    .hint.glitch::before,
+    .hint.glitch::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: linear-gradient(90deg, rgba(139,92,246,.18), rgba(34,197,94,.14));
+      mix-blend-mode: screen;
+      opacity: .0;
+      pointer-events:none;
+    }
+    .hint.glitch::before{ animation: scan 520ms linear 1; }
+    .hint.glitch::after{ animation: scan2 520ms linear 1; }
+
+    .hint.glitch .text{
+      text-shadow:
+        2px 0 rgba(34,197,94,.35),
+        -2px 0 rgba(139,92,246,.35);
+      animation: textJitter 520ms linear 1;
+    }
+
+    @keyframes hintGlitch{
+      0%{ transform: translateY(0); filter:none; }
+      15%{ transform: translateY(-1px) skewX(1deg); filter: brightness(1.1) contrast(1.05); }
+      30%{ transform: translateY(1px) skewX(-1deg); }
+      45%{ transform: translateY(-1px); }
+      60%{ transform: translateY(1px); }
+      100%{ transform: translateY(0); filter:none; }
+    }
+    @keyframes textJitter{
+      0%{ transform: translate(0,0); opacity:1; }
+      20%{ transform: translate(1px,-1px); }
+      40%{ transform: translate(-2px,1px); }
+      60%{ transform: translate(2px,0); }
+      80%{ transform: translate(-1px,-1px); }
+      100%{ transform: translate(0,0); }
+    }
+    @keyframes scan{
+      0%{ opacity:0; clip-path: inset(0 0 92% 0); }
+      20%{ opacity:.9; clip-path: inset(10% 0 72% 0); }
+      40%{ opacity:.35; clip-path: inset(38% 0 44% 0); }
+      60%{ opacity:.85; clip-path: inset(62% 0 20% 0); }
+      80%{ opacity:.25; clip-path: inset(80% 0 8% 0); }
+      100%{ opacity:0; clip-path: inset(92% 0 0 0); }
+    }
+    @keyframes scan2{
+      0%{ opacity:0; clip-path: inset(88% 0 0 0); }
+      25%{ opacity:.75; clip-path: inset(70% 0 12% 0); }
+      50%{ opacity:.30; clip-path: inset(40% 0 42% 0); }
+      75%{ opacity:.65; clip-path: inset(16% 0 70% 0); }
+      100%{ opacity:0; clip-path: inset(0 0 88% 0); }
+    }
+
+    /* новогодний уголок */
+    .corner{
+      position:absolute;
+      right:16px;
+      top:56px;
+      font-size:20px;
+      opacity:.9;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+      user-select:none;
     }
   </style>
 </head>
 
 <body>
+  <div class="glow"></div>
+  <div class="snow"></div>
+
   <div class="wrap">
     <div class="card" role="main" aria-label="Путешествие в 2026">
       <div class="topbar">
         <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-        <div class="title">Путешествие в 2026</div>
+        <div class="badge"><span>🎄 Путешествие в 2026 ✨</span></div>
       </div>
 
+      <div class="corner">❄️</div>
+
       <div class="content">
-        <!-- Экран 1: «Ты готова?» -->
-        <h1>Ты готова к путешествию в 2026 год?</h1>
+        <h1>Ты готова к путешествию в 2026 год? ✨</h1>
         <p class="muted">
           Если ты читаешь это — значит ты уже на первом шаге.
           Дальше будет только интереснее.
         </p>
 
-        <div class="ctaRow" id="startButtons">
-          <button class="primary" id="openLetterBtn">Открыть письмо</button>
-          <button class="ghost" id="muteBtn" aria-label="Без звука">Тихий режим</button>
+        <div class="ctaRow">
+          <button class="primary" id="openLetterBtn">Открыть письмо 💌</button>
         </div>
 
         <div class="divider"></div>
 
-        <!-- Экран 2: письмо (появляется после «Открыть письмо») -->
         <div class="letter" id="letter">
           <div class="seal">28.12 • канал связи установлен</div>
 
           <p id="letterText">
-            <!-- ТЕКСТ ПИСЬМА — замени на свой -->
-            Спасибо тебе за этот год.
-            За тепло, за поддержку, за смех, за моменты, которые я запомню.
-            Мне правда очень повезло с тобой — и я хочу, чтобы дальше было ещё сильнее.
+            Спасибо тебе за этот год. ✨
+            За тепло, за поддержку, за смех, за моменты, которые я запомню. 🤍
+            Мне правда очень повезло с тобой — и я хочу, чтобы дальше было ещё сильнее. 🎄
           </p>
 
           <p class="muted">
@@ -218,71 +347,42 @@
           </p>
 
           <div class="ctaRow">
-            <button class="primary" id="readyBtn">Я готова</button>
-            <button class="ghost" id="replayBtn">Перечитать</button>
+            <button class="primary" id="readyBtn">Я готова ✅</button>
           </div>
 
-          <!-- Экран 3: подсказка -->
           <div class="hint" id="hint">
             <div class="label">Первая подсказка</div>
-            <div class="text">28 декабря. Зафиксирован перелом времени. Первый ключ — там, где день кончается.</div>
+            <div class="text">«28 декабря. Зафиксирован перелом времени.
+Первый ключ — у входной двери.
+Подойди к двери и посмотри над глазком.»</div>
           </div>
         </div>
       </div>
     </div>
-
-    <p class="muted" style="margin:12px 6px 0;">
-      Подсказка появится только после её действия — так сюрприз не раскрывается раньше времени.
-    </p>
   </div>
-
-  <!-- Опционально: очень тихий “щелчок” при открытии письма.
-       Если не нужно — удали тег audio и кнопку «Тихий режим». -->
-  <audio id="tap" preload="auto">
-    <!-- можешь добавить assets/tap.mp3 и поставить src="assets/tap.mp3" -->
-  </audio>
 
   <script>
     const openLetterBtn = document.getElementById('openLetterBtn');
-    const muteBtn = document.getElementById('muteBtn');
     const readyBtn = document.getElementById('readyBtn');
-    const replayBtn = document.getElementById('replayBtn');
-
     const letter = document.getElementById('letter');
     const hint = document.getElementById('hint');
-    const tap = document.getElementById('tap');
-
-    let muted = false;
-
-    function softTap(){
-      if (muted) return;
-      // Если добавишь файл tap.mp3 — заработает.
-      try { tap.currentTime = 0; tap.play(); } catch(e) {}
-    }
 
     openLetterBtn.addEventListener('click', () => {
-      softTap();
       letter.style.display = 'block';
       hint.style.display = 'none';
-      // Прокрутка на мобильных, если контент выше
+      hint.classList.remove('glitch');
       letter.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
     readyBtn.addEventListener('click', () => {
-      softTap();
       hint.style.display = 'block';
       hint.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
 
-    replayBtn.addEventListener('click', () => {
-      softTap();
-      hint.style.display = 'none';
-      letter.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-
-    muteBtn.addEventListener('click', () => {
-      muted = !muted;
-      muteBtn.textContent = muted ? 'Тихий режим: ВКЛ' : 'Тихий режим';
+      // короткий глитч при появлении
+      hint.classList.remove('glitch');
+      void hint.offsetWidth; // reflow, чтобы анимация перезапускалась
+      hint.classList.add('glitch');
+      setTimeout(() => hint.classList.remove('glitch'), 650);
     });
   </script>
 </body>
