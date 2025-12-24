@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ключ №2: Горизонт 🌃</title>
+  <meta name="theme-color" content="#0b1020" />
+
+  <!-- Шрифты -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* СТИЛИ */
+    :root{
+      --bg1:#060913;
+      --bg2:#0b1020;
+      --card: rgba(10, 16, 32, .85);
+      --text:#f3f4f6;
+      --muted: rgba(243,244,246,.70);
+      --border: rgba(255,255,255,.14);
+      --shadow: 0 30px 80px rgba(0,0,0,.60);
+      --radius: 22px;
+      --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, monospace;
+      --gold: #f6c453;
+      --green:#22c55e;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0; min-height:100svh; display:flex; align-items:center; justify-content:center;
+      padding:20px; font-family:var(--sans); color:var(--text);
+      background:
+        radial-gradient(1100px 520px at 12% 12%, rgba(139,92,246,.22), transparent 60%),
+        radial-gradient(900px 520px at 88% 18%, rgba(34,197,94,.14), transparent 58%),
+        radial-gradient(1200px 700px at 50% 100%, rgba(246,196,83,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    .glow{ position: fixed; inset: -40px; opacity: .55; filter: blur(.2px); pointer-events:none; z-index:0; animation: twinkle 6s infinite alternate; }
+    @keyframes twinkle{ from{opacity:.35;} to{opacity:.60;} }
+
+    .snow{ position: fixed; inset: 0; pointer-events:none; z-index: 1; opacity: .40; animation: snowFall 18s linear infinite; background-image: radial-gradient(2px 2px at 20px 30px, #fff 50%, transparent 50%); background-size: 600px 300px; }
+    @keyframes snowFall{ from{ background-position: 0 0; } to{ background-position: 0 900px; } }
+
+    .wrap{ width:min(740px, 100%); position:relative; z-index:2; }
+    .card{
+      background: var(--card); border:1px solid var(--border);
+      box-shadow: var(--shadow); border-radius: var(--radius);
+      overflow:hidden; backdrop-filter: blur(12px); position:relative;
+      transition: all 0.3s ease;
+    }
+
+    .topbar{
+      display:flex; align-items:center; gap:10px; padding:14px 18px;
+      border-bottom:1px solid var(--border); background: rgba(0,0,0,.16);
+    }
+    .dot{ width:10px; height:10px; border-radius:999px; background: rgba(255,255,255,.22); }
+    .badge{
+      margin-left:auto; font-size:11px; letter-spacing:.10em; font-weight: 800;
+      text-transform:uppercase; color: rgba(243,244,246,.86);
+      padding:6px 12px; border-radius:999px;
+      border:1px solid rgba(246,196,83,.25); background: rgba(246,196,83,.10);
+    }
+
+    .content{ padding:24px 20px 22px; }
+    h1{ margin:0 0 10px; font-size:22px; font-weight:800; line-height: 1.3; }
+    p{ margin:10px 0; line-height:1.6; color: rgba(243,244,246,.93); font-size: 15px; }
+    .muted{ color: var(--muted); font-size:13px; }
+
+    .ctaRow{ display:flex; margin-top:20px; }
+    
+    button{
+      width: 100%; padding:16px; border-radius: 16px; border:none; 
+      font-weight:700; font-size: 15px; cursor:pointer; 
+      background: linear-gradient(135deg, #f6c453, #4ade80); color:#0b1020;
+      box-shadow: 0 4px 20px rgba(34,197,94,.25); transition: transform 0.2s;
+    }
+    button:active{ transform: scale(.98); }
+
+    .divider{ height:1px; background: var(--border); margin:20px 0; opacity: 0.6; display:none; }
+    .hidden-block { display: none; animation: fadeUp 0.6s ease forwards; }
+    @keyframes fadeUp{ from{ opacity:0; transform: translateY(10px); } to{ opacity:1; transform: translateY(0); } }
+
+    .typing-area{ white-space: pre-wrap; font-weight: 500; min-height: 20px; }
+    .typing-cursor::after{ content: '▋'; animation: blink 1s infinite; color: var(--gold); }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hint{
+      margin-top:20px; border:1px solid rgba(246,196,83,.3); background: rgba(246,196,83,.1);
+      border-radius: 16px; padding:18px;
+    }
+    .hint .label{ font-size:11px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom:8px; }
+    .hint .text{ font-size:16px; color: #fff; font-weight: 600; }
+  </style>
+</head>
+
+<body>
+  <!-- Музыка -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="glow"></div>
+  <div class="snow"></div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="topbar">
+        <span class="dot" style="background:#ef4444"></span>
+        <span class="dot" style="background:#f59e0b"></span>
+        <span class="dot" style="background:#22c55e"></span>
+        <div class="badge">🌆 ЭТАП 5 • ГОРИЗОНТ</div>
+      </div>
+
+      <div class="content">
+        <!-- Вступление -->
+        <h1 id="title">Ты видишь свет? 🔭</h1>
+        <p class="muted" id="introSub">
+          Окно — это граница нашего дома и большого мира.
+          Вторая часть ключа найдена.
+        </p>
+
+        <!-- Кнопка 1 -->
+        <div class="ctaRow" id="startRow">
+          <button id="startBtn">Разгадать тайну ПРОСТРАНСТВА ✨</button>
+        </div>
+
+        <div class="divider" id="mainDivider"></div>
+
+        <!-- Блок 1: Смысл (Интрига про путешествие) -->
+        <div class="hidden-block" id="messageBlock">
+          <p id="mainText" class="typing-area"></p>
+          
+          <div class="ctaRow hidden-block" id="nextRow" style="display:none">
+            <button id="nextBtn">Что нужно для финала? ❤️</button>
+          </div>
+        </div>
+
+        <!-- Блок 2: Подсказка (Подушка) -->
+        <div class="hidden-block hint" id="hintBlock" style="display:none">
+          <div class="label">ПОСЛЕДНИЙ ЭЛЕМЕНТ: ЧУВСТВА</div>
+          <div class="text typing-area" id="hintText"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- ТЕКСТЫ ДЛЯ ЭТАПА 5 (С ИНТРИГОЙ) ---
+    
+    // Текст 1: Намек на поездку (без слова Москва)
+    const textMeaning = 
+      "Вторая часть ПРОСТРАНСТВА — это Путешествие. ✈️\n\n" +
+      "Музыка, которую ты слышишь, звучит не просто так. Это саундтрек к нашему новому приключению. \n\n" +
+      "Скоро в списке городов, где мы были счастливы, появится еще одно величественное название. Там ритм быстрее, огни ярче, а история пишется каждый день.";
+
+    // Текст 2: Подсказка (ведет под ПОДУШКУ)
+    const textHint = 
+      "Итак, у нас есть:\n" +
+      "1. ВРЕМЯ (Цветы)\n" +
+      "2. ПРОСТРАНСТВО (Музыка и Город)\n\n" +
+      "Не хватает последнего, самого горячего элемента — ЧУВСТВА. ❤️\n\n" +
+      "ПОДСКАЗКА:\n" +
+      "Ищи там, где рождаются сны, где мы шепчемся по ночам и где так уютно обниматься.\n" +
+      ;
+
+    // ----------------------------
+    
+    const startBtn = document.getElementById('startBtn');
+    const title = document.getElementById('title');
+    const introSub = document.getElementById('introSub');
+    const mainDivider = document.getElementById('mainDivider');
+    const messageBlock = document.getElementById('messageBlock');
+    const mainTextField = document.getElementById('mainText');
+    const nextRow = document.getElementById('nextRow');
+    const nextBtn = document.getElementById('nextBtn');
+    const hintBlock = document.getElementById('hintBlock');
+    const hintTextField = document.getElementById('hintText');
+    const audio = document.getElementById('bgMusic');
+
+    function typeWriter(element, text, speed, callback) {
+      let i = 0;
+      function type() {
+        if (i < text.length) {
+          element.innerHTML = text.substring(0, i + 1) + '<span class="typing-cursor"></span>';
+          i++;
+          setTimeout(type, speed);
+        } else {
+          element.innerHTML = text; 
+          if (callback) callback();
+        }
+      }
+      type();
+    }
+
+    // 1. Старт
+    startBtn.addEventListener('click', () => {
+      audio.volume = 0.5;
+      audio.play().catch(e => console.log("Audio play error:", e));
+
+      startBtn.style.display = 'none';
+      introSub.style.display = 'none';
+      title.textContent = "Маршрут построен...";
+      mainDivider.style.display = 'block';
+      messageBlock.style.display = 'block';
+
+      typeWriter(mainTextField, textMeaning, 25, () => {
+        nextRow.style.display = 'flex'; 
+      });
+    });
+
+    // 2. Показать подсказку
+    nextBtn.addEventListener('click', () => {
+      nextBtn.innerHTML = "Анализ чувств...";
+      nextBtn.disabled = true;
+      
+      setTimeout(() => {
+        nextBtn.style.display = 'none';
+        hintBlock.style.display = 'block';
+        hintBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        typeWriter(hintTextField, textHint, 30);
+      }, 800);
+    });
+  </script>
+</body>
+</html>
