@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ключ №1: Вход 🚪</title>
+  <title>Этап 2: Философия Дома 🏠</title>
   <meta name="theme-color" content="#0b1020" />
 
   <!-- Шрифты -->
@@ -11,14 +11,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
   
-  <!-- Иконка -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Ключ №1 найден ✅" />
-  <meta property="og:description" content="Активация маршрута..." />
-  <meta property="og:type" content="website" />
-
   <style>
     :root{
       --bg1:#060913;
@@ -47,35 +39,20 @@
       overflow-x:hidden;
     }
 
-    /* ФОНОВЫЕ ЭФФЕКТЫ */
-    .glow{
-      position: fixed; inset: -40px; opacity: .55; filter: blur(.2px); pointer-events:none; z-index:0;
-      background: radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.45) 40%, transparent 60%),
-                  radial-gradient(1.5px 1.5px at 85% 75%, rgba(255,255,255,.20) 40%, transparent 60%);
-      animation: twinkle 6s ease-in-out infinite alternate;
-    }
-    @keyframes twinkle{ from{opacity:.35; transform:translateY(0);} to{opacity:.60; transform:translateY(6px);} }
+    /* Анимации */
+    .glow{ position: fixed; inset: -40px; opacity: .55; filter: blur(.2px); pointer-events:none; z-index:0; animation: twinkle 6s infinite alternate; }
+    @keyframes twinkle{ from{opacity:.35;} to{opacity:.60;} }
 
-    .snow, .snow:before, .snow:after{
-      position: fixed; inset: 0; content:""; pointer-events:none; z-index: 1; opacity: .40; filter: blur(.15px);
-      background-size: 600px 300px;
-      background-image:
-        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.75) 45%, transparent 55%),
-        radial-gradient(1.6px 1.6px at 140px 90px, rgba(255,255,255,.55) 45%, transparent 55%),
-        radial-gradient(2px 2px at 640px 150px, rgba(255,255,255,.58) 45%, transparent 55%);
-    }
-    .snow{ animation: snowFall 18s linear infinite; }
-    .snow:before{ opacity:.28; transform: translateY(-300px); animation: snowFall 26s linear infinite; }
-    .snow:after{ opacity:.22; transform: translateY(-600px); animation: snowFall 34s linear infinite; }
+    .snow{ position: fixed; inset: 0; pointer-events:none; z-index: 1; opacity: .40; animation: snowFall 18s linear infinite; background-image: radial-gradient(2px 2px at 20px 30px, #fff 50%, transparent 50%); background-size: 600px 300px; }
     @keyframes snowFall{ from{ background-position: 0 0; } to{ background-position: 0 900px; } }
 
-    /* КАРТОЧКА */
+    /* Карточка */
     .wrap{ width:min(740px, 100%); position:relative; z-index:2; }
     .card{
       background: var(--card); border:1px solid var(--border);
       box-shadow: var(--shadow); border-radius: var(--radius);
       overflow:hidden; backdrop-filter: blur(12px); position:relative;
-      transition: height 0.3s ease;
+      transition: all 0.3s ease;
     }
 
     .topbar{
@@ -84,88 +61,48 @@
     }
     .dot{ width:10px; height:10px; border-radius:999px; background: rgba(255,255,255,.22); }
     .badge{
-      margin-left:8px; font-size:11px; letter-spacing:.10em; font-weight: 800;
+      margin-left:auto; font-size:11px; letter-spacing:.10em; font-weight: 800;
       text-transform:uppercase; color: rgba(243,244,246,.86);
-      display:flex; align-items:center; gap:8px;
-    }
-    .badge span{
       padding:6px 12px; border-radius:999px;
       border:1px solid rgba(246,196,83,.25); background: rgba(246,196,83,.10);
     }
 
-    .corner{ position:absolute; right:16px; top:60px; font-size:24px; opacity:.85; filter: drop-shadow(0 0 10px rgba(255,255,255,0.3)); }
-
     .content{ padding:24px 20px 22px; }
-    h1{ margin:0 0 10px; font-size:24px; font-weight:800; letter-spacing:-0.02em; line-height: 1.3; }
-    p{ margin:10px 0; line-height:1.65; color: rgba(243,244,246,.93); font-size: 15px; }
+    h1{ margin:0 0 10px; font-size:22px; font-weight:800; line-height: 1.3; }
+    p{ margin:10px 0; line-height:1.6; color: rgba(243,244,246,.93); font-size: 15px; }
     .muted{ color: var(--muted); font-size:13px; }
 
-    .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; }
-
+    .ctaRow{ display:flex; margin-top:20px; }
+    
     button{
-      appearance:none; border:none; outline:none;
-      padding:14px 26px; border-radius: 999px; cursor:pointer;
-      font-weight:700; font-family: var(--sans); letter-spacing:.02em; font-size: 14px;
-      transition: all .2s; position:relative; overflow:hidden;
+      width: 100%; padding:16px; border-radius: 16px; border:none; 
+      font-weight:700; font-size: 15px; cursor:pointer; 
+      background: linear-gradient(135deg, #f6c453, #4ade80); color:#0b1020;
+      box-shadow: 0 4px 20px rgba(34,197,94,.25); transition: transform 0.2s;
     }
-    button:active{ transform: scale(.97); }
-    button:disabled { filter: grayscale(1); opacity: 0.6; cursor: not-allowed; }
+    button:active{ transform: scale(.98); }
 
-    .primary{
-      color:#0b1020;
-      background: linear-gradient(135deg, #f6c453, #4ade80);
-      box-shadow: 0 4px 20px rgba(34,197,94,.25);
-    }
-    .primary:hover:not(:disabled){ box-shadow: 0 6px 24px rgba(34,197,94,.40); filter: brightness(1.05); }
+    .divider{ height:1px; background: var(--border); margin:20px 0; opacity: 0.6; display:none; }
+    .hidden-block { display: none; animation: fadeUp 0.6s ease forwards; }
+    @keyframes fadeUp{ from{ opacity:0; transform: translateY(10px); } to{ opacity:1; transform: translateY(0); } }
 
-    .divider{ height:1px; background: var(--border); margin:20px 0; opacity: 0.6; }
-
-    .seal{
-      display:inline-flex; align-items:center; gap:8px;
-      font-family: var(--mono); font-size:11px; color: rgba(243,244,246,.60);
-      border:1px dashed rgba(255,255,255,.20); padding:6px 10px; border-radius: 8px;
-      margin-bottom: 12px;
-    }
-
-    /* ЭФФЕКТ ПЕЧАТИ */
-    .typing-area{ white-space: pre-wrap; min-height: 24px; font-weight: 500; }
-    .typing-cursor::after{
-      content: '▋'; display: inline-block; vertical-align: bottom;
-      animation: blink 1s step-start infinite; color: var(--gold); margin-left: 2px;
-    }
+    /* Печатный текст */
+    .typing-area{ white-space: pre-wrap; font-weight: 500; min-height: 20px; }
+    .typing-cursor::after{ content: '▋'; animation: blink 1s infinite; color: var(--gold); }
     @keyframes blink { 50% { opacity: 0; } }
 
-    /* БЛОКИ (изначально скрыты) */
-    .hidden-block { display: none; animation: fadeUp 0.6s ease forwards; }
-    @keyframes fadeUp{ from{ opacity:0; transform: translateY(15px); } to{ opacity:1; transform: translateY(0); } }
-
-    /* ПОДСКАЗКА */
+    /* Подсказка */
     .hint{
-      margin-top:20px;
-      border:1px solid rgba(246,196,83,.28); background: rgba(246,196,83,.08);
+      margin-top:20px; border:1px solid rgba(246,196,83,.3); background: rgba(246,196,83,.1);
       border-radius: 16px; padding:18px;
-      position:relative; overflow:hidden;
     }
-    .hint .label{
-      font-family: var(--mono); font-size:11px; color: var(--gold);
-      margin-bottom:8px; letter-spacing:.08em; text-transform: uppercase; font-weight: 800;
-    }
-    .hint .text{ font-size:16px; color: #fff; font-weight: 600; line-height: 1.6; }
-
-    /* Глитч при появлении */
-    .glitch-anim { animation: hintGlitch .5s ease-in-out 1; }
-    @keyframes hintGlitch{
-      0%, 100%{ transform: translate(0); filter:none; }
-      20%{ transform: translate(-2px, 2px); filter: brightness(1.08); }
-      40%{ transform: translate(-2px, -2px); }
-      60%{ transform: translate(2px, 2px); }
-      80%{ transform: translate(2px, -2px); }
-    }
+    .hint .label{ font-size:11px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom:8px; }
+    .hint .text{ font-size:16px; color: #fff; font-weight: 600; }
   </style>
 </head>
 
 <body>
-  <!-- Музыка -->
+  <!-- Музыка (автоплей по клику) -->
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
   </audio>
@@ -179,43 +116,36 @@
         <span class="dot" style="background:#ef4444"></span>
         <span class="dot" style="background:#f59e0b"></span>
         <span class="dot" style="background:#22c55e"></span>
-        <!-- Обновленный заголовок -->
-        <div class="badge"><span>🚪 КЛЮЧ 1 • ВХОД</span></div>
+        <div class="badge">🏠 ЭТАП 2 • ДОМ</div>
       </div>
 
-      <div class="corner">✨</div>
-
       <div class="content">
-        <!-- Шаг 0: Приветствие -->
-        <h1 id="title">Ты у двери? 👀</h1>
+        <!-- Вступление -->
+        <h1 id="title">С возвращением домой! ❤️</h1>
         <p class="muted" id="introSub">
-          Если ты нашла этот код — значит, первый рубеж пройден.
-          Нажми кнопку, чтобы активировать ключ.
+          Ты стоишь у входа в наш маленький мир. 
+          Подтверди, что ты на месте.
         </p>
 
-        <!-- Кнопка 1: Старт -->
+        <!-- Кнопка 1 -->
         <div class="ctaRow" id="startRow">
-          <button class="primary" id="startBtn">Активировать Ключ №1 🔑</button>
+          <button id="startBtn">Я у двери, продолжаем 🗝</button>
         </div>
 
-        <div class="divider hidden-block" id="mainDivider"></div>
+        <div class="divider" id="mainDivider"></div>
 
-        <!-- Шаг 1: Основной смысл -->
+        <!-- Блок 1: Философия -->
         <div class="hidden-block" id="messageBlock">
-          <div class="seal">28.12 • СТАТУС: ПОДТВЕРЖДЕНО</div>
-          
-          <!-- Сюда печатается смысловой текст -->
           <p id="mainText" class="typing-area"></p>
-
-          <!-- Кнопка 2: Переход к подсказке (появится после текста) -->
+          
           <div class="ctaRow hidden-block" id="nextRow" style="display:none">
-            <button class="primary" id="nextBtn">Получить следующую координату 🔐</button>
+            <button id="nextBtn">Найти Ключ №1 🧭</button>
           </div>
         </div>
 
-        <!-- Шаг 2: Подсказка (появится после нажатия кнопки 2) -->
+        <!-- Блок 2: Подсказка (Балкон) -->
         <div class="hidden-block hint" id="hintBlock" style="display:none">
-          <div class="label">Загрузка координат...</div>
+          <div class="label">ЛОКАЦИЯ ОПРЕДЕЛЕНА:</div>
           <div class="text typing-area" id="hintText"></div>
         </div>
 
@@ -224,39 +154,37 @@
   </div>
 
   <script>
-    // --- ТЕКСТЫ (Твоя редакция) ---
+    // --- ТЕКСТЫ ДЛЯ ЭТАПА 2 (ИСПРАВЛЕННЫЕ) ---
     
-    // 1. Смысловой текст (печатается после активации)
+    // Текст 1: Философия и список ключей
     const textMeaning = 
-      "Ключ №1 подтверждён: ВХОД 🚪\n\n" +
       "Есть места, куда возвращаются. И люди, к которым возвращаются. Спасибо, что выбираешь этот дом для уединения и счастья. ❤️\n\n" +
-      "Маршрут 2026 собирается из трёх ключей:\nпространство - чувства - время.";
+      "Наш Маршрут 2026 собирается из трёх главных ключей:\n" +
+      "🗝 ВРЕМЯ\n🗝 ПРОСТРАНСТВО\n🗝 ЧУВСТВА\n\n" +
+      "Прямо сейчас нас ждет первый ключ — ВРЕМЯ.";
 
-    // 2. Текст подсказки (печатается после запроса координаты)
+    // Текст 2: Подсказка (ведет на БАЛКОН)
     const textHint = 
-      "«Следующий ключ — там, где день заканчивается.\n\n" +
-      "Ищи в спальне: под подушкой. 🕯️»";
+      "Я хочу подарить тебе то, что неподвластно часам. Красоту, которая не увядает.\n\n" +
+      "ПОДСКАЗКА:\n" +
+      "Выйди туда, где можно вдохнуть полной грудью.\n" +
+      "Там, на свежем воздухе, тебя ждет первый подарок — символ вечности. 🌾";
 
     // ----------------------------
 
     const startBtn = document.getElementById('startBtn');
-    const startRow = document.getElementById('startRow');
     const title = document.getElementById('title');
     const introSub = document.getElementById('introSub');
     const mainDivider = document.getElementById('mainDivider');
-    
     const messageBlock = document.getElementById('messageBlock');
     const mainTextField = document.getElementById('mainText');
-    
     const nextRow = document.getElementById('nextRow');
     const nextBtn = document.getElementById('nextBtn');
-    
     const hintBlock = document.getElementById('hintBlock');
     const hintTextField = document.getElementById('hintText');
-    
     const audio = document.getElementById('bgMusic');
 
-    // Функция печати текста
+    // Функция печати
     function typeWriter(element, text, speed, callback) {
       let i = 0;
       function type() {
@@ -265,58 +193,42 @@
           i++;
           setTimeout(type, speed);
         } else {
-          element.innerHTML = text; // убрать курсор
+          element.innerHTML = text; 
           if (callback) callback();
         }
       }
       type();
     }
 
-    // ЛОГИКА 1: Нажатие СТАРТ
+    // 1. Старт
     startBtn.addEventListener('click', () => {
-      // Музыка
-      audio.volume = 0.4;
-      audio.play().catch(e => console.log("Audio play failed:", e));
+      audio.volume = 0.5;
+      audio.play().catch(e => console.log("Audio play error:", e));
 
-      // UI изменения
-      startBtn.style.display = 'none'; // Скрываем кнопку старта
-      introSub.style.display = 'none'; // Скрываем подзаголовок вступления
-      title.textContent = "Ключ активирован ✅"; // Меняем заголовок
-
+      startBtn.style.display = 'none';
+      introSub.style.display = 'none';
+      title.textContent = "Система ключей загружена...";
       mainDivider.style.display = 'block';
-      messageBlock.style.display = 'block'; // Показываем блок сообщения
+      messageBlock.style.display = 'block';
 
-      // Запуск печати смыслового текста
-      typeWriter(mainTextField, textMeaning, 30, () => {
-        // Когда допечатает -> показать кнопку "Следующая координата"
-        nextRow.style.display = 'flex';
-        nextRow.classList.add('hidden-block'); // Анимация появления
+      typeWriter(mainTextField, textMeaning, 25, () => {
+        nextRow.style.display = 'flex'; // Показываем кнопку "Найти ключ"
       });
     });
 
-    // ЛОГИКА 2: Нажатие ДАЛЕЕ
+    // 2. Показать подсказку
     nextBtn.addEventListener('click', () => {
+      nextBtn.innerHTML = "Сканирую территорию...";
       nextBtn.disabled = true;
-      nextBtn.innerHTML = "Расшифровка...";
       
-      // Имитация задержки "вычисления"
       setTimeout(() => {
-        nextBtn.innerHTML = "Данные получены";
-        nextBtn.style.opacity = '0.5';
-
-        // Показываем подсказку
+        nextBtn.style.display = 'none'; // Убираем кнопку, чтобы не мешала
         hintBlock.style.display = 'block';
-        hintBlock.classList.add('glitch-anim');
         hintBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-        // Печатаем текст подсказки
-        setTimeout(() => {
-          typeWriter(hintTextField, textHint, 35);
-        }, 400);
-
+        typeWriter(hintTextField, textHint, 30);
       }, 800);
     });
-
   </script>
 </body>
 </html>
