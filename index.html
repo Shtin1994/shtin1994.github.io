@@ -6,45 +6,109 @@
   <title>Путешествие в 2026 🎄</title>
   <meta name="theme-color" content="#0b1020" />
 
-  <!-- Шрифты и иконки -->
+  <!-- Шрифты -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Секретное послание 🎄" />
-  <meta property="og:description" content="У меня есть кое-что важное для тебя..." />
-  <meta property="og:type" content="website" />
-
   <style>
     :root{
       --bg1:#060913;
       --bg2:#0b1020;
-      --card: rgba(10, 16, 32, .78);
+      --card: rgba(10, 16, 32, .85);
       --text:#f3f4f6;
       --muted: rgba(243,244,246,.70);
-      --border: rgba(255,255,255,.14);
+      --border: rgba(255,255,255,.1);
       --shadow: 0 30px 80px rgba(0,0,0,.60);
-      --radius: 22px;
-      --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
-      --mono: ui-monospace, SFMono-Regular, monospace;
+      --radius: 24px;
+      --sans: 'Montserrat', system-ui, sans-serif;
       --gold: #f6c453;
+      --green: #4ade80;
     }
 
     *{ box-sizing:border-box; }
     body{
       margin:0; min-height:100svh; display:flex; align-items:center; justify-content:center;
       padding:20px; font-family:var(--sans); color:var(--text);
+      background: #060913; /* Fallback */
       background:
-        radial-gradient(1100px 520px at 12% 12%, rgba(139,92,246,.22), transparent 60%),
-        radial-gradient(900px 520px at 88% 18%, rgba(34,197,94,.14), transparent 58%),
-        radial-gradient(1200px 700px at 50% 100%, rgba(246,196,83,.10), transparent 60%),
+        radial-gradient(1100px 520px at 12% 12%, rgba(139,92,246,.15), transparent 60%),
+        radial-gradient(900px 520px at 88% 18%, rgba(34,197,94,.1), transparent 58%),
+        radial-gradient(1200px 700px at 50% 100%, rgba(246,196,83,.08), transparent 60%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
       overflow-x:hidden;
+      transition: background 1s ease;
     }
 
-    /* Анимации фона */
+    /* --- 1. WOW: Живой свет вокруг карточки --- */
+    .wrap {
+      width: min(740px, 100%);
+      position: relative;
+      z-index: 2;
+      perspective: 1000px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+      position: relative;
+      transition: transform 0.1s, box-shadow 0.3s, height 0.4s ease;
+      will-change: transform;
+    }
+
+    /* Слой для glow-эффекта мыши */
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      padding: 1.5px; /* толщина границы */
+      background: radial-gradient(
+        800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+        rgba(255, 255, 255, 0.3),
+        transparent 40%
+      );
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0.7;
+      z-index: 3;
+    }
+    
+    /* Внутреннее свечение */
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+        rgba(255, 255, 255, 0.04),
+        transparent 40%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* --- 4. WOW: Микро-тряска (Shake) --- */
+    .shake-anim {
+      animation: shakeCart 0.4s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    @keyframes shakeCart {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-2px, 0, 0); }
+      40%, 60% { transform: translate3d(2px, 0, 0); }
+    }
+
+    /* --- Анимации фона --- */
     .glow{
       position: fixed; inset: -40px; opacity: .55; filter: blur(.2px); pointer-events:none; z-index:0;
       background: radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.45) 40%, transparent 60%),
@@ -60,125 +124,171 @@
         radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.75) 45%, transparent 55%),
         radial-gradient(1.6px 1.6px at 140px 90px, rgba(255,255,255,.55) 45%, transparent 55%),
         radial-gradient(2px 2px at 640px 150px, rgba(255,255,255,.58) 45%, transparent 55%);
+      animation: snowFall 18s linear infinite;
     }
-    .snow{ animation: snowFall 18s linear infinite; }
-    .snow:before{ opacity:.28; transform: translateY(-300px); animation: snowFall 26s linear infinite; }
-    .snow:after{ opacity:.22; transform: translateY(-600px); animation: snowFall 34s linear infinite; }
+    .snow:before{ opacity:.28; transform: translateY(-300px); animation-duration: 26s; }
+    .snow:after{ opacity:.22; transform: translateY(-600px); animation-duration: 34s; }
+    
+    /* 7. WOW: Остановка снега в финале */
+    .snow.paused, .snow.paused:before, .snow.paused:after {
+      animation-play-state: paused;
+    }
+
     @keyframes snowFall{ from{ background-position: 0 0; } to{ background-position: 0 900px; } }
 
-    /* Карточка */
-    .wrap{ width:min(740px, 100%); position:relative; z-index:2; }
-    .card{
-      background: var(--card); border:1px solid var(--border);
-      box-shadow: var(--shadow); border-radius: var(--radius);
-      overflow:hidden; backdrop-filter: blur(12px); position:relative;
-      transition: height 0.3s ease;
-    }
-
+    /* Интерфейс */
     .topbar{
-      display:flex; align-items:center; gap:10px; padding:14px 18px;
-      border-bottom:1px solid var(--border); background: rgba(0,0,0,.16);
+      display:flex; align-items:center; gap:10px; padding:16px 20px;
+      border-bottom:1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,.2);
+      position: relative; z-index: 2;
     }
-    .dot{ width:10px; height:10px; border-radius:999px; background: rgba(255,255,255,.22); }
+    .dot{ width:10px; height:10px; border-radius:999px; background: rgba(255,255,255,.22); box-shadow: 0 0 10px rgba(255,255,255,0.1); }
     .badge{
-      margin-left:8px; font-size:11px; letter-spacing:.10em; font-weight: 700;
+      margin-left:8px; font-size:11px; letter-spacing:.12em; font-weight: 700;
       text-transform:uppercase; color: rgba(243,244,246,.86);
       display:flex; align-items:center; gap:8px;
     }
-    .badge span{ padding:6px 12px; border-radius:999px; border:1px solid rgba(246,196,83,.25); background: rgba(246,196,83,.10); }
+    .badge span{ 
+      padding:6px 12px; border-radius:999px; 
+      border:1px solid rgba(246,196,83,.25); background: rgba(246,196,83,.10); 
+      box-shadow: 0 0 15px rgba(246,196,83,0.1);
+    }
 
-    .content{ padding:24px 20px 22px; }
+    .content{ padding:28px 24px 26px; position: relative; z-index: 2; }
 
-    h1{ margin:0 0 10px; font-size:24px; font-weight:800; letter-spacing:-0.02em; line-height: 1.3; }
-    p{ margin:10px 0; line-height:1.65; color: rgba(243,244,246,.93); font-size: 15px; }
+    h1{ margin:0 0 12px; font-size:24px; font-weight:800; letter-spacing:-0.02em; line-height: 1.3; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+    p{ margin:10px 0; line-height:1.7; color: rgba(243,244,246,.93); font-size: 15px; }
     .muted{ color: var(--muted); font-size:13px; }
 
-    .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; min-height: 48px; /* чтобы не прыгало при появлении */ }
+    .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:22px; min-height: 48px; position: relative; }
 
     button{
       appearance:none; border:none; outline:none;
-      padding:14px 24px; border-radius: 999px; cursor:pointer;
+      padding:14px 28px; border-radius: 999px; cursor:pointer;
       font-weight:700; font-family: var(--sans); letter-spacing:.02em; font-size: 14px;
-      transition: all .2s; position:relative; overflow:hidden;
+      transition: all .3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+      position:relative; overflow:hidden;
+      z-index: 10;
     }
-    button:active{ transform: scale(.97); }
+    button:active{ transform: scale(.95); }
     
     .primary{
       color:#0b1020;
       background: linear-gradient(135deg, #f6c453, #4ade80);
-      box-shadow: 0 4px 20px rgba(34,197,94,.25);
+      box-shadow: 0 4px 20px rgba(34,197,94,.3);
     }
-    .primary:hover{ box-shadow: 0 6px 24px rgba(34,197,94,.40); filter: brightness(1.05); }
+    .primary:hover{ 
+      box-shadow: 0 8px 30px rgba(34,197,94,.5); 
+      transform: translateY(-2px);
+    }
+    /* Блик на кнопке */
+    .primary::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+      transform: skewX(-20deg); transition: 0.5s;
+    }
+    .primary:hover::after { left: 150%; transition: 0.7s ease-in-out; }
 
     .hidden-btn { display: none; }
-    
-    /* Кнопка 2 изначально скрыта CSS, пока не напечатается текст */
-    #readyBtn { display: none; opacity: 0; animation: btnFadeIn 0.5s forwards; }
-    @keyframes btnFadeIn { to { opacity: 1; } }
+    #readyBtn { display: none; opacity: 0; }
 
-    .divider{ height:1px; background: var(--border); margin:20px 0; opacity: 0.6; }
+    .divider{ height:1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin:24px 0; opacity: 0.6; }
 
-    .letter{ display:none; animation: fadeUp .6s ease forwards; }
+    /* --- 2. WOW: Материализация письма --- */
+    .letter{ 
+      display:none; 
+      /* Изначально скрыто, анимация добавляется JS */
+    }
+    .letter.visible {
+      animation: materialize 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes materialize { 
+      0% { opacity:0; transform: scale(0.94) translateY(10px); filter: blur(8px); } 
+      100% { opacity:1; transform: scale(1) translateY(0); filter: blur(0); } 
+    }
 
     .seal{
       display:inline-flex; align-items:center; gap:8px;
-      font-family: var(--mono); font-size:11px; color: rgba(243,244,246,.60);
+      font-family: ui-monospace, monospace; font-size:11px; color: rgba(243,244,246,.60);
       border:1px dashed rgba(255,255,255,.20); padding:6px 10px; border-radius: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      background: rgba(0,0,0,0.2);
     }
 
-    /* Стили для текста, который печатается */
-    .typing-area {
-        white-space: pre-wrap; /* Сохраняет переносы строк \n */
-        min-height: 20px;
-    }
+    .typing-area { white-space: pre-wrap; min-height: 20px; position: relative; }
+    
+    /* Курсор с мерцанием */
     .typing-cursor::after {
       content: '▋'; display: inline-block; vertical-align: bottom;
       animation: blink 1s step-start infinite; color: var(--gold); margin-left: 2px;
+      text-shadow: 0 0 8px var(--gold);
     }
     @keyframes blink { 50% { opacity: 0; } }
 
     .hint{
-      display:none; margin-top:16px;
-      border:1px solid rgba(246,196,83,.28); background: rgba(246,196,83,.08);
-      border-radius: 16px; padding:16px;
+      display:none; margin-top:20px;
+      border:1px solid rgba(246,196,83,.3); 
+      background: linear-gradient(135deg, rgba(246,196,83,.05), rgba(0,0,0,0));
+      border-radius: 18px; padding:20px;
+      position: relative; overflow: hidden;
     }
     .hint .label{
-      font-family: var(--mono); font-size:11px; color: var(--gold);
-      margin-bottom:6px; letter-spacing:.08em; text-transform: uppercase; font-weight: 700;
+      font-family: ui-monospace, monospace; font-size:11px; color: var(--gold);
+      margin-bottom:8px; letter-spacing:.08em; text-transform: uppercase; font-weight: 700;
+      display: flex; align-items: center; gap: 6px;
     }
-    .hint .text{ font-size:16px; color: #fff; font-weight: 500; line-height: 1.6; }
-
-    @keyframes fadeUp{ from{ opacity:0; transform: translateY(15px); } to{ opacity:1; transform: translateY(0); } }
+    .hint .label::before { content:''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; box-shadow: 0 0 8px var(--gold); }
     
-    .corner{ position:absolute; right:16px; top:60px; font-size:24px; opacity:.8; }
+    .hint .text{ font-size:16px; color: #fff; font-weight: 500; line-height: 1.6; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 
-    .glitch-anim { animation: hintGlitch .5s ease-in-out 1; }
-    @keyframes hintGlitch{
-      0%, 100%{ transform: translate(0); }
-      20%{ transform: translate(-2px, 2px); }
-      40%{ transform: translate(-2px, -2px); }
-      60%{ transform: translate(2px, 2px); }
-      80%{ transform: translate(2px, -2px); }
+    /* 7. WOW: Финальный пульс подсказки */
+    .hint.pulse-finish {
+      animation: borderPulse 2s infinite;
+    }
+    @keyframes borderPulse {
+      0% { border-color: rgba(246,196,83,.3); box-shadow: 0 0 0 rgba(246,196,83,0); }
+      50% { border-color: rgba(246,196,83,.8); box-shadow: 0 0 20px rgba(246,196,83,0.2); }
+      100% { border-color: rgba(246,196,83,.3); box-shadow: 0 0 0 rgba(246,196,83,0); }
+    }
+
+    .corner{ position:absolute; right:20px; top:70px; font-size:24px; opacity:.8; filter: drop-shadow(0 0 10px rgba(255,255,255,0.4)); animation: float 4s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+    /* --- 5. WOW: Частицы (Particles) --- */
+    .particle {
+      position: absolute;
+      pointer-events: none;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 10px var(--gold);
+      animation: pop 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+      z-index: 20;
+    }
+    @keyframes pop {
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Музыка -->
-  <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
+  <!-- Звуки (Добавь файлы или оставь пустыми, код не сломается) -->
+  <audio id="bgMusic" loop> <source src="music.mp3" type="audio/mpeg"> </audio>
+  <audio id="sfxClick"> <source src="click.mp3" type="audio/mpeg"> </audio>
+  <audio id="sfxWhoosh"> <source src="whoosh.mp3" type="audio/mpeg"> </audio>
+  <audio id="sfxSparkle"> <source src="sparkle.mp3" type="audio/mpeg"> </audio>
 
   <div class="glow"></div>
-  <div class="snow"></div>
+  <div class="snow" id="snowLayer"></div>
 
   <div class="wrap">
-    <div class="card">
+    <div class="card" id="card">
       <div class="topbar">
-        <span class="dot" style="background:#ef4444"></span>
-        <span class="dot" style="background:#f59e0b"></span>
-        <span class="dot" style="background:#22c55e"></span>
+        <span class="dot" style="background:#ef4444; box-shadow: 0 0 10px #ef4444;"></span>
+        <span class="dot" style="background:#f59e0b; box-shadow: 0 0 10px #f59e0b;"></span>
+        <span class="dot" style="background:#22c55e; box-shadow: 0 0 10px #22c55e;"></span>
         <div class="badge"><span>🎄БУДУЩИЙ 2026 ГОД! </span></div>
       </div>
 
@@ -190,27 +300,23 @@
           Если ты читаешь это - значит связь установлена и путешествие начинается.
         </p>
 
-        <div class="ctaRow">
+        <div class="ctaRow" id="btnContainer1">
           <button class="primary" id="openLetterBtn">Открыть письмо 💌</button>
         </div>
 
         <div class="divider" style="display:none" id="mainDivider"></div>
 
-        <!-- Контейнер письма -->
         <div class="letter" id="letter">
           <div class="seal">28.12 • НАШ КАНАЛ СВЯЗИ</div>
 
-          <!-- Сюда будет печататься поздравление -->
           <p id="letterText" class="typing-area" style="font-weight: 500; margin-bottom: 20px;"></p>
 
-          <div class="ctaRow">
+          <div class="ctaRow" id="btnContainer2">
             <button class="primary" id="readyBtn">Получить данные ✅</button>
           </div>
 
-          <!-- Контейнер подсказки -->
           <div class="hint" id="hint">
             <div class="label">передаю сообщение...</div>
-            <!-- Сюда будет печататься подсказка -->
             <div class="text typing-area" id="hintText"></div>
           </div>
         </div>
@@ -219,17 +325,12 @@
   </div>
 
   <script>
-    // --- НАСТРОЙКИ ТЕКСТА (Можешь менять тут) ---
-    
-    // Текст 1: Поздравление
-    // \n означает перенос строки
+    // --- ТЕКСТЫ (НЕ ИЗМЕНЯЛИСЬ) ---
     const textCongratulation = "Спасибо тебе за этот год. ✨\nЗа тепло и уют, за поддержку, за смех и за моменты, которые останутся со мной навсегда. 🤍\n\nМне безумно повезло с тобой - и я хочу, чтобы дальше было только лучше. Абу-Даби, Домики в лесу, гулянки в парке - это только начало!🎄";
-
-    // Текст 2: Подсказка
     const textHint = "«28 декабря. Зафиксирован перелом времени для нас с тобой.\nПервый ключ находится у входной двери.\n\nПодойди к двери и посмотри над глазком.»";
 
-    // ---------------------------------------------
-
+    // Элементы
+    const card = document.getElementById('card');
     const openLetterBtn = document.getElementById('openLetterBtn');
     const readyBtn = document.getElementById('readyBtn');
     const letter = document.getElementById('letter');
@@ -237,66 +338,156 @@
     const letterTextField = document.getElementById('letterText');
     const hintTextField = document.getElementById('hintText');
     const mainDivider = document.getElementById('mainDivider');
-    const audio = document.getElementById('bgMusic');
+    const snowLayer = document.getElementById('snowLayer');
+    
+    // Аудио
+    const audioBg = document.getElementById('bgMusic');
+    const sfxClick = document.getElementById('sfxClick');
+    const sfxWhoosh = document.getElementById('sfxWhoosh');
+    const sfxSparkle = document.getElementById('sfxSparkle');
 
-    // Функция печатания текста
-    // element: куда печатать
-    // text: что печатать
-    // speed: скорость (мс)
-    // callback: функция, которая сработает после окончания
-    function typeWriter(element, text, speed, callback) {
+    // Функция воспроизведения звука (безопасная)
+    function playSound(audioEl) {
+      if(audioEl) {
+        audioEl.currentTime = 0;
+        audioEl.volume = 0.3;
+        audioEl.play().catch(() => {});
+      }
+    }
+
+    // --- 1. WOW: Эффект свечения мыши ---
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+
+    // --- 5. WOW: Частицы ---
+    function createParticles(x, y, container) {
+      const particleCount = 12;
+      for (let i = 0; i < particleCount; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        
+        // Случайное направление
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = 60 + Math.random() * 60;
+        const tx = Math.cos(angle) * velocity;
+        const ty = Math.sin(angle) * velocity;
+        
+        // Разные цвета
+        if(Math.random() > 0.5) p.style.backgroundColor = '#4ade80'; // Green
+        
+        p.style.setProperty('--tx', `${tx}px`);
+        p.style.setProperty('--ty', `${ty}px`);
+        p.style.left = `${x}px`;
+        p.style.top = `${y}px`;
+        
+        container.appendChild(p);
+        setTimeout(() => p.remove(), 800);
+      }
+    }
+
+    // --- 3. WOW: Кинематографичный Тайпинг ---
+    function typeWriterCinematic(element, text, baseSpeed, callback) {
       let i = 0;
       function type() {
         if (i < text.length) {
-          // Добавляем символ + курсор
+          const char = text.charAt(i);
           element.innerHTML = text.substring(0, i + 1) + '<span class="typing-cursor"></span>';
+          
+          let delay = baseSpeed;
+          // Вариативность скорости (имитация человека)
+          delay += (Math.random() * 20 - 10);
+          
+          // Паузы на знаках препинания
+          if (char === '.' || char === '!' || char === '?') delay = baseSpeed * 12;
+          else if (char === ',') delay = baseSpeed * 6;
+          else if (char === '\n') delay = baseSpeed * 10;
+
           i++;
-          setTimeout(type, speed);
+          setTimeout(type, delay);
         } else {
-          // Убираем курсор в конце
-          element.innerHTML = text;
+          element.innerHTML = text; // Убираем курсор
           if (callback) callback();
         }
       }
       type();
     }
 
-    // 1. Нажатие на "Открыть письмо"
-    openLetterBtn.addEventListener('click', () => {
-      // Запуск музыки
-      audio.volume = 0.4;
-      audio.play().catch(e => console.log("Audio play error:", e));
+    // --- Сценарий ---
 
-      // Скрытие кнопки и показ разделителя
+    // КЛИК 1: Открыть письмо
+    openLetterBtn.addEventListener('click', (e) => {
+      // Звук и Вибрация
+      playSound(sfxClick);
+      playSound(sfxWhoosh);
+      card.classList.add('shake-anim');
+      setTimeout(() => card.classList.remove('shake-anim'), 400);
+
+      // Музыка
+      audioBg.volume = 0.4;
+      audioBg.play().catch(() => {});
+
+      // UI
       openLetterBtn.classList.add('hidden-btn');
       mainDivider.style.display = 'block';
+      
+      // Показ письма (WOW №2: Материализация)
       letter.style.display = 'block';
-
-      // Скролл
-      letter.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      // Запуск печати первого текста
-      // Когда закончит печатать -> покажет кнопку readyBtn
       setTimeout(() => {
-        typeWriter(letterTextField, textCongratulation, 35, () => {
-           readyBtn.style.display = 'inline-block'; // Показываем вторую кнопку
+        letter.classList.add('visible');
+        letter.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+
+      // Печать текста
+      setTimeout(() => {
+        typeWriterCinematic(letterTextField, textCongratulation, 40, () => {
+           // Показать кнопку 2 с анимацией
+           readyBtn.style.display = 'inline-block';
+           readyBtn.animate([
+             { opacity: 0, transform: 'translateY(10px)' },
+             { opacity: 1, transform: 'translateY(0)' }
+           ], { duration: 500, fill: 'forwards' });
         });
-      }, 300);
+      }, 600); // Чуть большая задержка для эффекта
     });
 
-    // 2. Нажатие на "Получить данные"
-    readyBtn.addEventListener('click', () => {
-      readyBtn.classList.add('hidden-btn'); // Скрываем кнопку
-      hint.style.display = 'block';
-      hint.classList.add('glitch-anim');
+    // КЛИК 2: Получить данные
+    readyBtn.addEventListener('click', (e) => {
+      // Звук
+      playSound(sfxClick);
       
+      // WOW №5: Частицы
+      const rect = readyBtn.getBoundingClientRect();
+      // Координаты относительно контейнера кнопки
+      const btnContainer = document.getElementById('btnContainer2');
+      // Грубый расчет центра кнопки внутри контейнера
+      createParticles(readyBtn.offsetLeft + readyBtn.offsetWidth/2, readyBtn.offsetTop + readyBtn.offsetHeight/2, btnContainer);
+
+      readyBtn.classList.add('hidden-btn');
+      
+      hint.style.display = 'block';
+      hint.animate([
+        { opacity: 0, transform: 'scale(0.95)' },
+        { opacity: 1, transform: 'scale(1)' }
+      ], { duration: 400, easing: 'ease-out' });
+
       hint.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-      // Запуск печати второго текста
+      // Печать подсказки
       setTimeout(() => {
-        typeWriter(hintTextField, textHint, 40, null);
+        typeWriterCinematic(hintTextField, textHint, 45, () => {
+          // WOW №7: Финал
+          playSound(sfxSparkle);
+          hint.classList.add('pulse-finish'); // Пульсация рамки
+          snowLayer.classList.add('paused'); // Остановка времени (снега)
+        });
       }, 500);
     });
+
   </script>
 </body>
 </html>
