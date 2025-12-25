@@ -46,7 +46,10 @@
     .card {
       background: var(--card); border: 1px solid var(--border);
       box-shadow: var(--shadow); border-radius: var(--radius);
-      overflow: hidden; backdrop-filter: blur(16px); position: relative;
+      overflow: hidden; 
+      backdrop-filter: blur(16px); 
+      -webkit-backdrop-filter: blur(16px);
+      position: relative;
       transition: transform 0.1s, box-shadow 0.3s;
       will-change: transform;
     }
@@ -90,7 +93,7 @@
     p{ margin:10px 0; line-height:1.7; color: rgba(243,244,246,.93); font-size: 15px; }
     .muted{ color: var(--muted); font-size:13px; }
 
-    .ctaRow{ display:flex; margin-top:24px; position: relative; }
+    .ctaRow{ display:flex; margin-top:24px; position: relative; width: 100%; justify-content: flex-start;}
     
     button{
       width: 100%; padding:16px; border-radius: 999px; border:none; 
@@ -176,7 +179,7 @@
 </head>
 
 <body>
-  <!-- Звуки -->
+  <!-- Звуки (placeholder) -->
   <audio id="bgMusic" loop> <source src="music.mp3" type="audio/mpeg"> </audio>
   <audio id="sfxClick"> <source src="click.mp3" type="audio/mpeg"> </audio>
   <audio id="sfxWhoosh"> <source src="whoosh.mp3" type="audio/mpeg"> </audio>
@@ -211,7 +214,7 @@
 
         <!-- Блок 1: Философия -->
         <div class="hidden-block" id="messageBlock">
-          <p id="mainText" class="typing-area"></p>
+          <p id="mainText" class="typing-area" style="font-size: 15px; line-height: 1.6; margin-bottom: 20px;"></p>
           
           <div class="ctaRow hidden-block" id="nextRow">
             <button id="nextBtn">Найти Ключ №1 🧭</button>
@@ -229,7 +232,7 @@
   </div>
 
   <script>
-    // --- ТЕКСТЫ ---
+    // --- ТЕКСТЫ (Этап 2) ---
     const textMeaning = 
       "Есть места, куда возвращаются. И люди, к которым возвращаются. Спасибо, что выбираешь этот дом для уединения и счастья. ❤️\n\n" +
       "Наш Маршрут 2026 собирается из трёх главных ключей:\n" +
@@ -245,6 +248,7 @@
     // Элементы
     const card = document.getElementById('card');
     const startBtn = document.getElementById('startBtn');
+    const startRow = document.getElementById('startRow');
     const title = document.getElementById('title');
     const introSub = document.getElementById('introSub');
     const mainDivider = document.getElementById('mainDivider');
@@ -281,12 +285,16 @@
 
     // --- WOW 2: Частицы ---
     function createParticles(x, y, container) {
-      const particleCount = 12;
+      const particleCount = 14;
       for (let i = 0; i < particleCount; i++) {
         const p = document.createElement('div');
         p.classList.add('particle');
         const angle = Math.random() * Math.PI * 2;
         const velocity = 60 + Math.random() * 60;
+        
+        // Randomize color slightly
+        if(Math.random() > 0.5) p.style.backgroundColor = '#4ade80';
+
         p.style.setProperty('--tx', `${Math.cos(angle) * velocity}px`);
         p.style.setProperty('--ty', `${Math.sin(angle) * velocity}px`);
         p.style.left = `${x}px`;
@@ -313,7 +321,7 @@
           i++;
           setTimeout(type, delay);
         } else {
-          element.innerHTML = text;
+          element.innerHTML = text; // Убираем курсор
           if (callback) callback();
         }
       }
@@ -322,37 +330,47 @@
 
     // --- СЦЕНАРИЙ ---
 
-    // 1. Старт
+    // 1. Старт (Подтверждение локации)
     startBtn.addEventListener('click', () => {
       playSound(sfxClick);
       playSound(sfxWhoosh);
       card.classList.add('shake-anim');
       setTimeout(() => card.classList.remove('shake-anim'), 400);
 
+      // Запуск музыки
       audioBg.volume = 0.5;
       audioBg.play().catch(e => {});
 
       // Скрытие интро
-      startBtn.parentElement.style.display = 'none'; // Скрываем строку кнопки
+      startRow.style.display = 'none'; 
       introSub.style.display = 'none';
-      title.textContent = "Система ключей загружена...";
-      title.style.opacity = "0.8";
+      
+      // Смена заголовка для плавности
+      title.style.opacity = '0';
+      setTimeout(() => {
+        title.innerHTML = "ФИЛОСОФИЯ ДОМА ✨";
+        title.style.opacity = '1';
+        title.style.transition = 'opacity 0.5s';
+      }, 200);
       
       mainDivider.style.display = 'block';
       
-      // Появление блока сообщения
+      // Появление блока философии
       messageBlock.style.display = 'block';
       messageBlock.classList.add('visible-anim');
 
       setTimeout(() => {
         typeWriterCinematic(mainTextField, textMeaning, 30, () => {
           nextRow.style.display = 'flex';
-          nextRow.classList.add('visible-anim');
+          nextRow.animate([
+             { opacity: 0, transform: 'translateY(10px)' },
+             { opacity: 1, transform: 'translateY(0)' }
+           ], { duration: 500, fill: 'forwards' });
         });
-      }, 500);
+      }, 600);
     });
 
-    // 2. Показать подсказку
+    // 2. Показать подсказку (Поиск ключа)
     nextBtn.addEventListener('click', () => {
       playSound(sfxClick);
       
@@ -360,22 +378,25 @@
       const rect = nextBtn.getBoundingClientRect();
       createParticles(nextBtn.offsetLeft + nextBtn.offsetWidth/2, nextBtn.offsetTop + nextBtn.offsetHeight/2, nextRow);
 
-      nextBtn.innerHTML = "Сканирую территорию...";
-      nextBtn.disabled = true;
-      nextBtn.style.transform = "scale(0.95)";
+      // Имитация загрузки
+      nextBtn.innerHTML = "Загружаю координаты...";
+      nextBtn.style.background = "#333";
+      nextBtn.style.color = "#ccc";
       
       setTimeout(() => {
-        nextRow.style.display = 'none'; 
+        nextBtn.classList.add('hidden-block'); // Скрываем кнопку
+        
         hintBlock.style.display = 'block';
         hintBlock.classList.add('visible-anim');
         hintBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
         typeWriterCinematic(hintTextField, textHint, 35, () => {
+            // Финал этапа
             playSound(sfxSparkle);
             hintBlock.classList.add('pulse-finish');
-            snowLayer.classList.add('paused');
+            snowLayer.classList.add('paused'); // Остановить время
         });
-      }, 1200);
+      }, 1000);
     });
   </script>
 </body>
