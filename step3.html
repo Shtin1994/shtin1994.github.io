@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ключ №2: Звук 🎻</title>
+  <title>Этап 4: Ключ Звук 🎻</title>
   <meta name="theme-color" content="#0b1020" />
 
   <!-- Шрифты -->
@@ -46,11 +46,15 @@
     .card {
       background: var(--card); border: 1px solid var(--border);
       box-shadow: var(--shadow); border-radius: var(--radius);
-      overflow: hidden; backdrop-filter: blur(16px); position: relative;
+      overflow: hidden; 
+      backdrop-filter: blur(16px); 
+      -webkit-backdrop-filter: blur(16px);
+      position: relative;
       transition: transform 0.1s, box-shadow 0.3s;
       will-change: transform;
     }
 
+    /* Слой для glow-эффекта мыши */
     .card::before {
       content: ""; position: absolute; inset: 0; border-radius: var(--radius); padding: 1.5px;
       background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.3), transparent 40%);
@@ -89,7 +93,7 @@
     p{ margin:10px 0; line-height:1.7; color: rgba(243,244,246,.93); font-size: 15px; }
     .muted{ color: var(--muted); font-size:13px; }
 
-    .ctaRow{ display:flex; margin-top:24px; position: relative; }
+    .ctaRow{ display:flex; margin-top:24px; position: relative; width: 100%; justify-content: flex-start; }
     
     button{
       width: 100%; padding:16px; border-radius: 999px; border:none; 
@@ -152,6 +156,7 @@
     .hint .label::before { content:''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; box-shadow: 0 0 8px var(--gold); }
     .hint .text{ font-size:16px; color: #fff; font-weight: 500; line-height: 1.6; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 
+    /* Финальный пульс */
     .hint.pulse-finish { animation: borderPulse 2s infinite; }
     @keyframes borderPulse {
       0% { border-color: rgba(246,196,83,.3); box-shadow: 0 0 0 rgba(246,196,83,0); }
@@ -173,7 +178,7 @@
 </head>
 
 <body>
-  <!-- Звуки -->
+  <!-- Звуки (placeholder) -->
   <audio id="bgMusic" loop> <source src="music.mp3" type="audio/mpeg"> </audio>
   <audio id="sfxClick"> <source src="click.mp3" type="audio/mpeg"> </audio>
   <audio id="sfxWhoosh"> <source src="whoosh.mp3" type="audio/mpeg"> </audio>
@@ -208,7 +213,7 @@
 
         <!-- Блок 1: Задание (Алиса) -->
         <div class="hidden-block" id="messageBlock">
-          <p id="mainText" class="typing-area"></p>
+          <p id="mainText" class="typing-area" style="font-size: 15px; line-height: 1.6; margin-bottom: 20px;"></p>
           
           <div class="ctaRow hidden-block" id="nextRow">
             <button id="nextBtn">Музыка играет. Куда дальше? 🌍</button>
@@ -226,7 +231,7 @@
   </div>
 
   <script>
-    // --- ТЕКСТЫ ---
+    // --- ТЕКСТЫ ДЛЯ ЭТАПА 4 ---
     const textMeaning = 
       "Ты нашла первую часть ПРОСТРАНСТВА — Звук.\n\n" +
       "Чтобы магия сработала, скажи громко:\n" +
@@ -244,6 +249,7 @@
     // Элементы
     const card = document.getElementById('card');
     const startBtn = document.getElementById('startBtn');
+    const startRow = document.getElementById('startRow');
     const title = document.getElementById('title');
     const introSub = document.getElementById('introSub');
     const mainDivider = document.getElementById('mainDivider');
@@ -280,12 +286,15 @@
 
     // --- WOW 2: Частицы ---
     function createParticles(x, y, container) {
-      const particleCount = 12;
+      const particleCount = 14;
       for (let i = 0; i < particleCount; i++) {
         const p = document.createElement('div');
         p.classList.add('particle');
         const angle = Math.random() * Math.PI * 2;
         const velocity = 60 + Math.random() * 60;
+        
+        if(Math.random() > 0.5) p.style.backgroundColor = '#4ade80';
+
         p.style.setProperty('--tx', `${Math.cos(angle) * velocity}px`);
         p.style.setProperty('--ty', `${Math.sin(angle) * velocity}px`);
         p.style.left = `${x}px`;
@@ -321,7 +330,7 @@
 
     // --- СЦЕНАРИЙ ---
 
-    // 1. Старт
+    // 1. Старт (Подтверждение находки источника)
     startBtn.addEventListener('click', () => {
       playSound(sfxClick);
       playSound(sfxWhoosh);
@@ -332,27 +341,35 @@
       audioBg.play().catch(e => {});
 
       // Скрытие интро
-      startBtn.parentElement.style.display = 'none'; 
+      startRow.style.display = 'none'; 
       introSub.style.display = 'none';
       
-      title.textContent = "Активация атмосферы...";
-      title.style.opacity = "0.8";
+      // Смена заголовка
+      title.style.opacity = '0';
+      setTimeout(() => {
+        title.innerHTML = "Часть 1: ЗВУК ✨";
+        title.style.opacity = '1';
+        title.style.transition = 'opacity 0.5s';
+      }, 200);
       
       mainDivider.style.display = 'block';
       
-      // Появление блока сообщения
+      // Появление блока текста
       messageBlock.style.display = 'block';
       messageBlock.classList.add('visible-anim');
 
       setTimeout(() => {
         typeWriterCinematic(mainTextField, textMeaning, 30, () => {
           nextRow.style.display = 'flex';
-          nextRow.classList.add('visible-anim');
+          nextRow.animate([
+             { opacity: 0, transform: 'translateY(10px)' },
+             { opacity: 1, transform: 'translateY(0)' }
+           ], { duration: 500, fill: 'forwards' });
         });
-      }, 500);
+      }, 600);
     });
 
-    // 2. Показать подсказку
+    // 2. Показать подсказку (Поиск Окна)
     nextBtn.addEventListener('click', () => {
       playSound(sfxClick);
       
@@ -360,12 +377,13 @@
       const rect = nextBtn.getBoundingClientRect();
       createParticles(nextBtn.offsetLeft + nextBtn.offsetWidth/2, nextBtn.offsetTop + nextBtn.offsetHeight/2, nextRow);
 
-      nextBtn.innerHTML = "Построение маршрута...";
-      nextBtn.disabled = true;
-      nextBtn.style.transform = "scale(0.95)";
+      nextBtn.innerHTML = "Вычисляю локацию...";
+      nextBtn.style.background = "#333";
+      nextBtn.style.color = "#ccc";
       
       setTimeout(() => {
-        nextRow.style.display = 'none'; 
+        nextBtn.classList.add('hidden-block'); 
+        
         hintBlock.style.display = 'block';
         hintBlock.classList.add('visible-anim');
         hintBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -375,7 +393,7 @@
             hintBlock.classList.add('pulse-finish');
             snowLayer.classList.add('paused');
         });
-      }, 1200);
+      }, 1000);
     });
   </script>
 </body>
