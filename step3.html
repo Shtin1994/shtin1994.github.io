@@ -12,107 +12,182 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
   
   <style>
-    /* СТИЛИ (ОДИНАКОВЫЕ ДЛЯ ВСЕХ) */
     :root{
       --bg1:#060913;
       --bg2:#0b1020;
       --card: rgba(10, 16, 32, .85);
       --text:#f3f4f6;
       --muted: rgba(243,244,246,.70);
-      --border: rgba(255,255,255,.14);
+      --border: rgba(255,255,255,.1);
       --shadow: 0 30px 80px rgba(0,0,0,.60);
-      --radius: 22px;
-      --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
-      --mono: ui-monospace, SFMono-Regular, monospace;
+      --radius: 24px;
+      --sans: 'Montserrat', system-ui, sans-serif;
       --gold: #f6c453;
-      --green:#22c55e;
+      --green: #4ade80;
     }
 
     *{ box-sizing:border-box; }
     body{
       margin:0; min-height:100svh; display:flex; align-items:center; justify-content:center;
       padding:20px; font-family:var(--sans); color:var(--text);
+      background: #060913;
       background:
-        radial-gradient(1100px 520px at 12% 12%, rgba(139,92,246,.22), transparent 60%),
-        radial-gradient(900px 520px at 88% 18%, rgba(34,197,94,.14), transparent 58%),
-        radial-gradient(1200px 700px at 50% 100%, rgba(246,196,83,.10), transparent 60%),
+        radial-gradient(1100px 520px at 12% 12%, rgba(139,92,246,.15), transparent 60%),
+        radial-gradient(900px 520px at 88% 18%, rgba(34,197,94,.1), transparent 58%),
+        radial-gradient(1200px 700px at 50% 100%, rgba(246,196,83,.08), transparent 60%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
       overflow-x:hidden;
+      transition: background 1s ease;
     }
 
-    .glow{ position: fixed; inset: -40px; opacity: .55; filter: blur(.2px); pointer-events:none; z-index:0; animation: twinkle 6s infinite alternate; }
+    /* --- WOW 1: Живой свет вокруг карточки --- */
+    .wrap { width: min(740px, 100%); position: relative; z-index: 2; perspective: 1000px; }
+
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      box-shadow: var(--shadow); border-radius: var(--radius);
+      overflow: hidden; backdrop-filter: blur(16px); position: relative;
+      transition: transform 0.1s, box-shadow 0.3s;
+      will-change: transform;
+    }
+
+    .card::before {
+      content: ""; position: absolute; inset: 0; border-radius: var(--radius); padding: 1.5px;
+      background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.3), transparent 40%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      pointer-events: none; opacity: 0.7; z-index: 3;
+    }
+    
+    /* Анимации фона */
+    .glow{ position: fixed; inset: -40px; opacity: .55; filter: blur(.2px); pointer-events:none; z-index:0; animation: twinkle 6s infinite alternate; background: radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.45) 40%, transparent 60%); }
     @keyframes twinkle{ from{opacity:.35;} to{opacity:.60;} }
 
     .snow{ position: fixed; inset: 0; pointer-events:none; z-index: 1; opacity: .40; animation: snowFall 18s linear infinite; background-image: radial-gradient(2px 2px at 20px 30px, #fff 50%, transparent 50%); background-size: 600px 300px; }
     @keyframes snowFall{ from{ background-position: 0 0; } to{ background-position: 0 900px; } }
+    .snow.paused { animation-play-state: paused; }
 
-    .wrap{ width:min(740px, 100%); position:relative; z-index:2; }
-    .card{
-      background: var(--card); border:1px solid var(--border);
-      box-shadow: var(--shadow); border-radius: var(--radius);
-      overflow:hidden; backdrop-filter: blur(12px); position:relative;
-      transition: all 0.3s ease;
-    }
-
+    /* Интерфейс */
     .topbar{
-      display:flex; align-items:center; gap:10px; padding:14px 18px;
-      border-bottom:1px solid var(--border); background: rgba(0,0,0,.16);
+      display:flex; align-items:center; gap:10px; padding:16px 20px;
+      border-bottom:1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,.2);
+      position: relative; z-index: 2;
     }
-    .dot{ width:10px; height:10px; border-radius:999px; background: rgba(255,255,255,.22); }
+    .dot{ width:10px; height:10px; border-radius:999px; background: rgba(255,255,255,.22); box-shadow: 0 0 10px rgba(255,255,255,0.1); }
+    
     .badge{
-      margin-left:auto; font-size:11px; letter-spacing:.10em; font-weight: 800;
+      margin-left:auto; font-size:11px; letter-spacing:.12em; font-weight: 800;
       text-transform:uppercase; color: rgba(243,244,246,.86);
       padding:6px 12px; border-radius:999px;
       border:1px solid rgba(246,196,83,.25); background: rgba(246,196,83,.10);
+      box-shadow: 0 0 15px rgba(246,196,83,0.1);
     }
 
-    .content{ padding:24px 20px 22px; }
-    h1{ margin:0 0 10px; font-size:22px; font-weight:800; line-height: 1.3; }
-    p{ margin:10px 0; line-height:1.6; color: rgba(243,244,246,.93); font-size: 15px; }
+    .content{ padding:28px 24px 26px; position: relative; z-index: 2; }
+    
+    h1{ margin:0 0 12px; font-size:24px; font-weight:800; line-height: 1.3; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+    p{ margin:10px 0; line-height:1.7; color: rgba(243,244,246,.93); font-size: 15px; }
     .muted{ color: var(--muted); font-size:13px; }
 
-    .ctaRow{ display:flex; margin-top:20px; }
+    .ctaRow{ display:flex; margin-top:24px; position: relative; }
     
     button{
-      width: 100%; padding:16px; border-radius: 16px; border:none; 
-      font-weight:700; font-size: 15px; cursor:pointer; 
+      width: 100%; padding:16px; border-radius: 999px; border:none; 
+      font-weight:700; font-family: var(--sans); font-size: 15px; cursor:pointer; 
       background: linear-gradient(135deg, #f6c453, #4ade80); color:#0b1020;
-      box-shadow: 0 4px 20px rgba(34,197,94,.25); transition: transform 0.2s;
+      box-shadow: 0 4px 20px rgba(34,197,94,.3); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative; overflow: hidden; z-index: 10;
     }
-    button:active{ transform: scale(.98); }
+    button:hover{ box-shadow: 0 8px 30px rgba(34,197,94,.5); transform: translateY(-2px); filter: brightness(1.05); }
+    button:active{ transform: scale(.97); }
+    
+    button::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+      transform: skewX(-20deg); transition: 0.5s;
+    }
+    button:hover::after { left: 150%; transition: 0.7s ease-in-out; }
 
-    .divider{ height:1px; background: var(--border); margin:20px 0; opacity: 0.6; display:none; }
-    .hidden-block { display: none; animation: fadeUp 0.6s ease forwards; }
-    @keyframes fadeUp{ from{ opacity:0; transform: translateY(10px); } to{ opacity:1; transform: translateY(0); } }
+    .divider{ height:1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin:24px 0; opacity: 0.6; display:none; }
 
-    .typing-area{ white-space: pre-wrap; font-weight: 500; min-height: 20px; }
-    .typing-cursor::after{ content: '▋'; animation: blink 1s infinite; color: var(--gold); }
+    /* Анимации появления */
+    .hidden-block { display: none; }
+    .visible-anim { animation: materialize 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+    @keyframes materialize { 
+      0% { opacity:0; transform: scale(0.94) translateY(10px); filter: blur(8px); } 
+      100% { opacity:1; transform: scale(1) translateY(0); filter: blur(0); } 
+    }
+
+    /* Тряска */
+    .shake-anim { animation: shakeCart 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+    @keyframes shakeCart {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-2px, 0, 0); }
+      40%, 60% { transform: translate3d(2px, 0, 0); }
+    }
+
+    /* Печатный текст */
+    .typing-area{ white-space: pre-wrap; font-weight: 500; min-height: 20px; position: relative; }
+    .typing-cursor::after{ 
+      content: '▋'; display: inline-block; vertical-align: bottom;
+      animation: blink 1s step-start infinite; color: var(--gold); margin-left: 2px;
+      text-shadow: 0 0 8px var(--gold);
+    }
     @keyframes blink { 50% { opacity: 0; } }
 
+    /* Подсказка */
     .hint{
-      margin-top:20px; border:1px solid rgba(246,196,83,.3); background: rgba(246,196,83,.1);
-      border-radius: 16px; padding:18px;
+      margin-top:24px; border:1px solid rgba(246,196,83,.3); 
+      background: linear-gradient(135deg, rgba(246,196,83,.05), rgba(0,0,0,0));
+      border-radius: 18px; padding:20px;
+      position: relative; overflow: hidden;
     }
-    .hint .label{ font-size:11px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom:8px; }
-    .hint .text{ font-size:16px; color: #fff; font-weight: 600; }
+    .hint .label{ 
+      font-family: ui-monospace, monospace; font-size:11px; color: var(--gold); 
+      margin-bottom:8px; letter-spacing:.08em; text-transform: uppercase; font-weight: 700;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .hint .label::before { content:''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; box-shadow: 0 0 8px var(--gold); }
+    .hint .text{ font-size:16px; color: #fff; font-weight: 500; line-height: 1.6; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+
+    .hint.pulse-finish { animation: borderPulse 2s infinite; }
+    @keyframes borderPulse {
+      0% { border-color: rgba(246,196,83,.3); box-shadow: 0 0 0 rgba(246,196,83,0); }
+      50% { border-color: rgba(246,196,83,.8); box-shadow: 0 0 20px rgba(246,196,83,0.2); }
+      100% { border-color: rgba(246,196,83,.3); box-shadow: 0 0 0 rgba(246,196,83,0); }
+    }
+
+    /* Частицы */
+    .particle {
+      position: absolute; pointer-events: none; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--gold); box-shadow: 0 0 10px var(--gold);
+      animation: pop 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; z-index: 20;
+    }
+    @keyframes pop {
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+    }
   </style>
 </head>
 
 <body>
-  <!-- Музыка -->
-  <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
+  <!-- Звуки -->
+  <audio id="bgMusic" loop> <source src="music.mp3" type="audio/mpeg"> </audio>
+  <audio id="sfxClick"> <source src="click.mp3" type="audio/mpeg"> </audio>
+  <audio id="sfxWhoosh"> <source src="whoosh.mp3" type="audio/mpeg"> </audio>
+  <audio id="sfxSparkle"> <source src="sparkle.mp3" type="audio/mpeg"> </audio>
 
   <div class="glow"></div>
-  <div class="snow"></div>
+  <div class="snow" id="snowLayer"></div>
 
   <div class="wrap">
-    <div class="card">
+    <div class="card" id="card">
       <div class="topbar">
-        <span class="dot" style="background:#ef4444"></span>
-        <span class="dot" style="background:#f59e0b"></span>
-        <span class="dot" style="background:#22c55e"></span>
+        <span class="dot" style="background:#ef4444; box-shadow: 0 0 10px #ef4444;"></span>
+        <span class="dot" style="background:#f59e0b; box-shadow: 0 0 10px #f59e0b;"></span>
+        <span class="dot" style="background:#22c55e; box-shadow: 0 0 10px #22c55e;"></span>
         <div class="badge">🔊 ЭТАП 4 • ЗВУК</div>
       </div>
 
@@ -135,13 +210,13 @@
         <div class="hidden-block" id="messageBlock">
           <p id="mainText" class="typing-area"></p>
           
-          <div class="ctaRow hidden-block" id="nextRow" style="display:none">
+          <div class="ctaRow hidden-block" id="nextRow">
             <button id="nextBtn">Музыка играет. Куда дальше? 🌍</button>
           </div>
         </div>
 
         <!-- Блок 2: Подсказка (Окно) -->
-        <div class="hidden-block hint" id="hintBlock" style="display:none">
+        <div class="hidden-block hint" id="hintBlock">
           <div class="label">ЧАСТЬ 2: ГЕОЛОКАЦИЯ</div>
           <div class="text typing-area" id="hintText"></div>
         </div>
@@ -151,16 +226,13 @@
   </div>
 
   <script>
-    // --- ТЕКСТЫ ДЛЯ ЭТАПА 4 ---
-    
-    // Текст 1: Инструкция для Алисы
+    // --- ТЕКСТЫ ---
     const textMeaning = 
       "Ты нашла первую часть ПРОСТРАНСТВА — Звук.\n\n" +
       "Чтобы магия сработала, скажи громко:\n" +
       "«Алиса, включи красивую симфоническую музыку».\n\n" +
       "Слышишь? Запомни это ощущение. Скоро эта музыка зазвучит для нас по-настоящему. 🎻";
 
-    // Текст 2: Подсказка (ведет к ОКНУ)
     const textHint = 
       "Но музыка должна звучать где-то, верно?\n" +
       "Часть вторая: ТОЧКА НА КАРТЕ.\n\n" +
@@ -169,8 +241,8 @@
       "Чтобы увидеть горизонт, подойди к тому месту, через которое в нашу комнату попадает свет.\n" +
       "(Ищи конверт на окне)";
 
-    // ----------------------------
-    
+    // Элементы
+    const card = document.getElementById('card');
     const startBtn = document.getElementById('startBtn');
     const title = document.getElementById('title');
     const introSub = document.getElementById('introSub');
@@ -181,51 +253,129 @@
     const nextBtn = document.getElementById('nextBtn');
     const hintBlock = document.getElementById('hintBlock');
     const hintTextField = document.getElementById('hintText');
-    const audio = document.getElementById('bgMusic');
+    const snowLayer = document.getElementById('snowLayer');
 
-    function typeWriter(element, text, speed, callback) {
+    // Аудио
+    const audioBg = document.getElementById('bgMusic');
+    const sfxClick = document.getElementById('sfxClick');
+    const sfxWhoosh = document.getElementById('sfxWhoosh');
+    const sfxSparkle = document.getElementById('sfxSparkle');
+
+    function playSound(audioEl) {
+      if(audioEl) {
+        audioEl.currentTime = 0;
+        audioEl.volume = 0.3;
+        audioEl.play().catch(() => {});
+      }
+    }
+
+    // --- WOW 1: Эффект свечения мыши ---
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+
+    // --- WOW 2: Частицы ---
+    function createParticles(x, y, container) {
+      const particleCount = 12;
+      for (let i = 0; i < particleCount; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = 60 + Math.random() * 60;
+        p.style.setProperty('--tx', `${Math.cos(angle) * velocity}px`);
+        p.style.setProperty('--ty', `${Math.sin(angle) * velocity}px`);
+        p.style.left = `${x}px`;
+        p.style.top = `${y}px`;
+        container.appendChild(p);
+        setTimeout(() => p.remove(), 800);
+      }
+    }
+
+    // --- WOW 3: Кинематографичный Тайпинг ---
+    function typeWriterCinematic(element, text, baseSpeed, callback) {
       let i = 0;
       function type() {
         if (i < text.length) {
+          const char = text.charAt(i);
           element.innerHTML = text.substring(0, i + 1) + '<span class="typing-cursor"></span>';
+          
+          let delay = baseSpeed;
+          delay += (Math.random() * 20 - 10);
+          if (char === '.' || char === '!' || char === '?') delay = baseSpeed * 12;
+          else if (char === ',') delay = baseSpeed * 6;
+          else if (char === '\n') delay = baseSpeed * 10;
+
           i++;
-          setTimeout(type, speed);
+          setTimeout(type, delay);
         } else {
-          element.innerHTML = text; 
+          element.innerHTML = text;
           if (callback) callback();
         }
       }
       type();
     }
 
+    // --- СЦЕНАРИЙ ---
+
     // 1. Старт
     startBtn.addEventListener('click', () => {
-      audio.volume = 0.5;
-      audio.play().catch(e => console.log("Audio play error:", e));
+      playSound(sfxClick);
+      playSound(sfxWhoosh);
+      card.classList.add('shake-anim');
+      setTimeout(() => card.classList.remove('shake-anim'), 400);
 
-      startBtn.style.display = 'none';
+      audioBg.volume = 0.5;
+      audioBg.play().catch(e => {});
+
+      // Скрытие интро
+      startBtn.parentElement.style.display = 'none'; 
       introSub.style.display = 'none';
+      
       title.textContent = "Активация атмосферы...";
+      title.style.opacity = "0.8";
+      
       mainDivider.style.display = 'block';
+      
+      // Появление блока сообщения
       messageBlock.style.display = 'block';
+      messageBlock.classList.add('visible-anim');
 
-      typeWriter(mainTextField, textMeaning, 25, () => {
-        nextRow.style.display = 'flex'; 
-      });
+      setTimeout(() => {
+        typeWriterCinematic(mainTextField, textMeaning, 30, () => {
+          nextRow.style.display = 'flex';
+          nextRow.classList.add('visible-anim');
+        });
+      }, 500);
     });
 
     // 2. Показать подсказку
     nextBtn.addEventListener('click', () => {
+      playSound(sfxClick);
+      
+      // Частицы
+      const rect = nextBtn.getBoundingClientRect();
+      createParticles(nextBtn.offsetLeft + nextBtn.offsetWidth/2, nextBtn.offsetTop + nextBtn.offsetHeight/2, nextRow);
+
       nextBtn.innerHTML = "Построение маршрута...";
       nextBtn.disabled = true;
+      nextBtn.style.transform = "scale(0.95)";
       
       setTimeout(() => {
-        nextBtn.style.display = 'none';
+        nextRow.style.display = 'none'; 
         hintBlock.style.display = 'block';
+        hintBlock.classList.add('visible-anim');
         hintBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-        typeWriter(hintTextField, textHint, 30);
-      }, 800);
+        typeWriterCinematic(hintTextField, textHint, 35, () => {
+            playSound(sfxSparkle);
+            hintBlock.classList.add('pulse-finish');
+            snowLayer.classList.add('paused');
+        });
+      }, 1200);
     });
   </script>
 </body>
